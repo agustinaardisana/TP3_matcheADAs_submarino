@@ -3,13 +3,40 @@
 
 <head>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submarino</title>
 </head>
 
 <body>
+    <main class="background">
+        <h1>MatcheADAs</h1>
+        <div class="container controls">
+            <div class="container-score">
+                <p>Combo <span id="combo">x1</span></p>
+                <p>Puntaje <span id="score">0</span></p>
+            </div>
+            <div class="container-buttons">
+                <button>
+                    <i class="fas fa-info-circle"></i>
+                </button>
+                <button>
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </div>
 
+        <div class="container grid">
+            <div class="grid"></div>
+        </div>
+
+        <div class="container timer">
+            <i class="fas fa-hourglass-half"></i>
+            <p><span class="timer-countdown">0:30</span></p>
+        </div>
+    </main>
+    <div class="overlay"></div>
 
 
 
