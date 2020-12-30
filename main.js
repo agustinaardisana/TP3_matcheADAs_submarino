@@ -1,11 +1,11 @@
 // -------------------------------------🐠 Variables JS
 const itemSize = 50;
-const seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🐙", "🐡", "🦞"];
-const list = [];
-const items = "";
+let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🐙", "🐡", "🦞"];
+let listOfItems = [];
+let items = "";
 
 // -------------------------------------🐠 Variables DOM
-const grid = document.querySelector(".grid");
+const grid = document.querySelector("#grid");
 
 // -------------------------------------🐠
 
@@ -39,3 +39,5 @@ const createGrid = (width, height) => {
 
   return grid;
 };
+
+createGrid(6, 6);

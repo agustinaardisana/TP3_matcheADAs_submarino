@@ -68,11 +68,26 @@ h1 {
 
 .container.grid {
   height: 470px;
-  opacity: 0.5;
   margin: 20px 0;
+  background-color: #1d8caa7c;
 }
 
 .container.timer {
   max-width: 100px;
   color: #fff;
+}
+.grid > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  margin: auto;
+  font-size: 35px;
 }
