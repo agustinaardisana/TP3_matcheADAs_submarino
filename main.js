@@ -7,6 +7,7 @@ let gridWidth = "";
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
+const gridContainer = document.querySelector("#grid-container");
 
 // -------------------------------------🐠
 
@@ -17,7 +18,7 @@ const getRandomNumber = (seaCreaturesArray) => {
 const getRandomItems = (seaCreaturesArray) => {
   return seaCreaturesArray[getRandomNumber(seaCreaturesArray)];
 };
-const containerGridSize = (numberOfRows) => {
+const defineItemSize = (numberOfRows) => {
   itemSize = gridWidth / numberOfRows;
 };
 
@@ -36,17 +37,26 @@ const responsiveSizing = () => {
 
 gridWidth = responsiveSizing();
 
-const createSqueare = (x, y, items) => {
-  const squeare = document.createElement("div");
-  squeare.dataset.x = x;
-  squeare.dataset.y = y;
-  squeare.style.height = `${itemSize}px`;
-  squeare.style.width = `${itemSize}px`;
-  squeare.style.top = `${x * itemSize}px`;
-  squeare.style.left = `${y * itemSize}px`;
-  squeare.innerHTML = items;
+const containerGridSize = () => {
+  grid.style.width = `${gridWidth}px`;
+  grid.style.height = `${gridWidth}px`;
+  gridContainer.style.width = `${gridWidth + 20}px`;
+  gridContainer.style.height = `${gridWidth + 20}px`;
+};
 
-  return squeare;
+const createSquare = (x, y, items) => {
+  const square = document.createElement("div");
+  //   square.addEventListener("click", escucharClicks);
+  square.dataset.x = x;
+  square.dataset.y = y;
+  square.style.height = `${itemSize}px`;
+  square.style.width = `${itemSize}px`;
+  square.style.top = `${x * itemSize}px`;
+  square.style.left = `${y * itemSize}px`;
+  square.innerHTML = items;
+  square.classList.add("square");
+
+  return square;
 };
 
 const createGridArray = (width, height) => {
@@ -60,14 +70,12 @@ const createGridArray = (width, height) => {
 };
 
 const createGridStructure = () => {
-  grid.style.width = `${gridWidth}px`;
-  grid.style.height = `${gridWidth}px`;
-
+  containerGridSize();
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
       items = getRandomItems(seaCreaturesArray);
       listOfItems[i][j] = items;
-      grid.appendChild(createSqueare(i, j, items));
+      grid.appendChild(createSquare(i, j, items));
     }
   }
 
