@@ -1,75 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Redressed&family=Roboto&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
 }
 
 button {
-    text-decoration: none;
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .background {
-    background-size: cover;
-    background-image: url(img/fondo.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  background-size: cover;
+  background-image: url(img/background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
-    font-family: 'Redressed', cursive;
-    margin-bottom: 20px;
-    color: #ffc06c;
-    font-size: 60px;
-    text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa, -1px 1px #1d8caa,2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff, -2px 2px #ffffff;
+  font-family: "Redressed", cursive;
+  margin-bottom: 20px;
+  color: #ffc06c;
+  font-size: 60px;
+  text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa,
+    -1px 1px #1d8caa, 2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff,
+    -2px 2px #ffffff;
 }
 
 .container {
-    display: flex;
-    justify-content: space-between;
-    width: 500px;
-    border: 1px solid #ffffff;
-    padding: 20px;
-    border-radius: 5px;
-    background-color: #1d8caa;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  border: 1px solid #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #1d8caa;
 }
 
-.container-score, .container-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.container-score,
+.container-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.container-score>p {
-    margin-right: 10px;
-    color: #ffffff;
+.container-score > p {
+  margin-right: 10px;
+  color: #ffffff;
 }
 
-.container-buttons>button {
-    margin-right: 5px;
-    font-size: 18px;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    background-color: #1d8caa;
-    padding: 8px;
+.container-buttons > button {
+  margin-right: 5px;
+  font-size: 18px;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  background-color: #1d8caa;
+  padding: 8px;
 }
 
 .container.grid {
-    height: 470px;
-    opacity: 0.5;
-    margin: 20px 0;
+  height: 470px;
+  opacity: 0.5;
+  margin: 20px 0;
 }
 
 .container.timer {
-    max-width: 100px;
-    color: #fff;
+  max-width: 100px;
+  color: #fff;
 }
