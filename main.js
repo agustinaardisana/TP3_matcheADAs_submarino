@@ -88,3 +88,27 @@ const startGame = (width, height) => {
 };
 
 startGame(6, 6);
+
+const storeClicksOnItems = () => {
+    const allSquares = document.querySelectorAll("#grid > div")
+
+    let firstClickedSquare = ''
+    let secondClickedSquare = ''
+
+    for (let square of allSquares) {
+        square.onclick = (e) => {
+            firstClickedSquare = e.target
+            console.log("click 1")
+
+            for (let secondSquare of allSquares) {
+                secondSquare.onclick = (e) => {
+                    secondClickedSquare = e.target
+                    console.log("click 2")
+                    console.log(firstClickedSquare, secondClickedSquare)
+                }
+            }
+        }
+    }
+}
+
+storeClicksOnItems()
