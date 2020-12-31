@@ -75,17 +75,21 @@ h1 {
   max-width: 100px;
   color: #fff;
 }
-.grid > div {
-  display: flex;
+
+#grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    margin: auto;
+    font-size: 35px;
+    position: relative;
+  }
+  
+#grid > div {
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   position: absolute;
 }
 
-#grid {
-  display: flex;
-  flex-wrap: wrap;
-  height: auto;
-  margin: auto;
-  font-size: 35px;
-}
+

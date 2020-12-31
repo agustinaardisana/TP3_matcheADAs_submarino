@@ -1,5 +1,5 @@
 // -------------------------------------🐠 Variables JS
-const itemSize = 50;
+let itemSize = 0;
 let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🐙", "🐡", "🦞"];
 let listOfItems = [];
 let items = "";
@@ -18,6 +18,7 @@ const getRandomNumber = (seaCreaturesArray) => {
 const getRandomItems = (seaCreaturesArray) => {
     return seaCreaturesArray[getRandomNumber(seaCreaturesArray)];
 };
+
 const defineItemSize = (numberOfRows) => {
     itemSize = gridWidth / numberOfRows;
 };
@@ -46,7 +47,7 @@ const containerGridSize = () => {
 
 const createSquare = (x, y, items) => {
     const square = document.createElement("div");
-    //   square.addEventListener("click", escucharClicks);
+
     square.dataset.x = x;
     square.dataset.y = y;
     square.style.height = `${itemSize}px`;
@@ -83,6 +84,7 @@ const createGridStructure = () => {
 };
 
 const startGame = (width, height) => {
+    defineItemSize(6)
     createGridArray(width, height);
     createGridStructure();
 };
