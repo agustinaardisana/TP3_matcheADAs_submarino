@@ -77,19 +77,31 @@ h1 {
 }
 
 #grid {
-    display: flex;
-    flex-wrap: wrap;
-    height: auto;
-    margin: auto;
-    font-size: 35px;
-    position: relative;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  margin: auto;
+  font-size: 35px;
+  position: relative;
+}
+
 #grid > div {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   position: absolute;
 }
 
-
+.selected {
+  border: black 2px solid;
+}
+/* ------------------------------------ Efecto Clickeable */
+.emoji {
+  animation-iteration-count: 1;
+}
+.clickable {
+  animation-name: clickable;
+  animation-duration: 1s;
+}
+@keyframes clickable {
+  20% {
+    transform: scale(0.7);
+  }
+}
