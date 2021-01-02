@@ -83,6 +83,7 @@ h1 {
   margin: auto;
   font-size: 35px;
   position: relative;
+  cursor: pointer;
 }
 
 #grid > div {
