@@ -89,6 +89,7 @@ h1 {
   position: absolute;
   text-align: center;
   vertical-align: baseline;
+  cursor: pointer;
 }
 
 .selected {

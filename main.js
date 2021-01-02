@@ -95,7 +95,7 @@ const storeClicksOnItems = () => {
     square.onclick = (e) => {
       firstClickedSquare = e.target;
       console.log("click 1");
-      selectItems(firstClickedSquare);
+
       for (let secondSquare of allSquares) {
         secondSquare.onclick = (e) => {
           secondClickedSquare = e.target;
