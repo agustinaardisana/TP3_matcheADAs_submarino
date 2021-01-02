@@ -107,7 +107,6 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1;
 }
 
 .popup-welcome {
@@ -145,4 +144,28 @@ h1 {
 .play-game {
   align-self: flex-end;
   margin-right: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* HIDE MODAL */
+.hidden {
+  display: none;
 }

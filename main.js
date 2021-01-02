@@ -1,6 +1,6 @@
 // -------------------------------------🐠 Variables JS
 let itemSize = 0;
-let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🐙", "🐡", "🦞"];
+let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦞"];
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
@@ -89,7 +89,7 @@ const startGame = (width, height) => {
     createGridStructure();
 };
 
-startGame(6, 6);
+
 
 //Listens to the clicks and stores them in order to compare their positions later 
 const storeClicksOnItems = () => {
@@ -131,3 +131,17 @@ const areAdjacent = (firstSquare, secondSquare) => {
     }
 }
 
+
+// -------------------------------------🐠 Modals
+const startGameModal = document.querySelector('.start-game');
+const playGameButton = document.querySelector('.play-game');
+
+//-------------------------------------🐠 General Actions
+const hideModal = modal => modal.classList.add('hidden');
+const showModal = modal => modal.classList.remove('hidden');
+
+
+playGameButton.onclick = () => {
+    hideModal(startGameModal);
+    startGame(6, 6);
+}
