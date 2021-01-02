@@ -87,6 +87,8 @@ h1 {
 
 #grid > div {
   position: absolute;
+  text-align: center;
+  vertical-align: baseline;
 }
 
 .selected {

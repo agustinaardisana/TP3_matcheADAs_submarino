@@ -100,46 +100,13 @@ const storeClicksOnItems = () => {
         secondSquare.onclick = (e) => {
           secondClickedSquare = e.target;
           console.log("click 2");
-          console.log(
-            checkSelectedItems(firstClickedSquare, secondClickedSquare)
-          );
-          //   areAdjacent(firstClickedSquare, secondClickedSquare);
+          console.log();
+          areAdjacent(firstClickedSquare, secondClickedSquare);
         };
       }
     };
   }
 };
-
-const checkSelectedItems = (firstClickedSquare, secondClickedSquare) => {
-  if (secondClickedSquare && !isTheSameItemSelected(firstClickedSquare)) {
-    deleteSelection(secondClickedSquare, firstClickedSquare);
-  }
-  return false;
-};
-
-const isTheSameItemSelected = (firstClickedSquare, secondClickedSquare) => {
-  if (secondClickedSquare) {
-    return (
-      secondClickedSquare.dataset.x &&
-      secondClickedSquare.dataset.y === firstClickedSquare.dataset.x &&
-      firstClickedSquare.dataset.y
-    );
-  }
-  return false;
-};
-
-const selectItems = (firstClickedSquare) => {
-  if (!firstClickedSquare.className.includes("selected")) {
-    firstClickedSquare.classList.add("selected");
-  }
-};
-
-const deleteSelection = (firstClickedSquare, secondClickedSquare) => {
-  firstClickedSquare.classList.remove("selected");
-  secondClickedSquare.classList.remove("selected");
-};
-
-storeClicksOnItems();
 
 //Compares the position of each clicked square and checks whether they are adjacent or not
 const areAdjacent = (firstSquare, secondSquare) => {
@@ -176,6 +143,7 @@ const startGame = (width, height) => {
   createGridArray(width, height);
   createGridStructure();
   clickable();
+  storeClicksOnItems();
 };
 
 startGame(6, 6);
