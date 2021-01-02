@@ -1,6 +1,6 @@
 // -------------------------------------🐠 Variables JS
 let itemSize = 0;
-let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🐙", "🐡", "🦞"];
+let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦞"];
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
@@ -61,6 +61,11 @@ const createSquare = (x, y, items) => {
   return square;
 };
 
+/**
+ * Creates the array of items using the width and the height as length according the difficulty that has been chosen
+ * @param {number} width
+ * @param {number} height
+ */
 const createGridArray = (width, height) => {
   for (let i = 0; i < width; i++) {
     listOfItems[i] = [];
@@ -71,6 +76,9 @@ const createGridArray = (width, height) => {
   return listOfItems;
 };
 
+/**
+ * Creates the structure in html
+ */
 const createGridStructure = () => {
   containerGridSize();
   for (let i = 0; i < listOfItems.length; i++) {
@@ -84,7 +92,19 @@ const createGridStructure = () => {
   return grid;
 };
 
-//Listens to the clicks and stores them in order to compare their positions later
+/**
+ * Gives a selected class to the first div clicked
+ * @param {div} firstClickedSquare
+ */
+const selectItems = (firstClickedSquare) => {
+  if (!firstClickedSquare.className.includes("selected")) {
+    firstClickedSquare.classList.add("selected");
+  }
+};
+
+/**
+ * Listens to the clicks and stores them in order to compare their positions later
+ */
 const storeClicksOnItems = () => {
   const allSquares = document.querySelectorAll("#grid > div");
 
@@ -94,21 +114,29 @@ const storeClicksOnItems = () => {
   for (let square of allSquares) {
     square.onclick = (e) => {
       firstClickedSquare = e.target;
+      selectItems(firstClickedSquare);
       console.log("click 1");
 
       for (let secondSquare of allSquares) {
         secondSquare.onclick = (e) => {
           secondClickedSquare = e.target;
+
           console.log("click 2");
-          console.log();
-          areAdjacent(firstClickedSquare, secondClickedSquare);
+
+          if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
+            changePositions(firstClickedSquare, secondClickedSquare);
+          }
         };
       }
     };
   }
 };
 
-//Compares the position of each clicked square and checks whether they are adjacent or not
+/**
+ * Compares the position of each clicked square and checks whether they are adjacent or not
+ * @param {div} firstSquare
+ * @param {div} secondSquare
+ */
 const areAdjacent = (firstSquare, secondSquare) => {
   const datax1 = Number(firstSquare.dataset.x);
   const datay1 = Number(firstSquare.dataset.y);
@@ -121,13 +149,17 @@ const areAdjacent = (firstSquare, secondSquare) => {
     (datay1 === datay2 && datax1 === datax2 + 1) ||
     (datay1 === datay2 && datax1 === datax2 - 1)
   ) {
-    console.log("son adyacentes");
+    return true;
   } else {
-    console.log("no son adyacentes");
+    return false;
   }
 };
+// -------------------------------------🐠 Selec Items
 
 // -------------------------------------🐠 Clickable Effect
+/**
+ * Gives a clickable effect to the selected item
+ */
 const clickable = () => {
   let emojisList = document.querySelectorAll(".emoji");
 
@@ -138,11 +170,36 @@ const clickable = () => {
   }
 };
 
+/**
+ * Changes the position of two selected divs
+ * @param {div} firstSquare
+ * @param {div} secondSquare
+ */
+const changePositions = (firstSquare, secondSquare) => {
+  const datax1 = Number(firstSquare.dataset.x);
+  const datax2 = Number(secondSquare.dataset.x);
+  const datay1 = Number(firstSquare.dataset.y);
+  const datay2 = Number(secondSquare.dataset.y);
+
+  let tempVariable = listOfItems[datax1][datay1];
+  listOfItems[datax1][datay1] = listOfItems[datax2][datay2];
+  listOfItems[datax2][datay2] = tempVariable;
+
+  firstSquare.style.top = `${datax2 * itemSize}px`;
+  secondSquare.style.top = `${datax1 * itemSize}px`;
+  firstSquare.style.left = `${datay2 * itemSize}px`;
+  secondSquare.style.left = `${datay1 * itemSize}px`;
+
+  firstSquare.dataset.x = datax2;
+  secondSquare.dataset.x = datax1;
+  firstSquare.dataset.y = datay2;
+  secondSquare.dataset.y = datay1;
+};
+
 const startGame = (width, height) => {
   defineItemSize(width);
   createGridArray(width, height);
   createGridStructure();
-  clickable();
   storeClicksOnItems();
 };
 
