@@ -109,3 +109,9 @@ h1 {
     transform: scale(0.7);
   }
 }
+
+@media (max-width: 575.98px) {
+  .container {
+    max-width: 320px;
+  }
+}
