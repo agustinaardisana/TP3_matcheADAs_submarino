@@ -115,3 +115,14 @@ h1 {
     max-width: 320px;
   }
 }
+
+/* ------------------------------------ Responsive */
+@media (max-width:500px) {
+    #grid > div {
+        text-align: revert;
+    }
+
+    #grid {
+        font-size: 25px;
+    }
+}
