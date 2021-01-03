@@ -22,10 +22,10 @@ Nevertheless, this is an ongoing project, which means that more sections and fun
 This is only our third coding project as well as my first time working in teams. We have a long way to go in order to improve the quality of our code and any feedback will make us feel accompanied on this journey, as long as it comes from a place of respect.
 
 ## Authors
-* [Ana Laclau](https://github.com/anaclette)
+* [Ana Esposito](https://github.com/anaesposito)
 * [Agustina Ardisana](https://github.com/agustinaardisana)
-* [Angélica Sofía Pagés Burgos](https://github.com/angelicapages)
-* [Carolina Krstulovich](https://github.com/carokartu)
+* [Mariana Cairo](https://github.com/maarcf)
+* [Melissa Dorado](https://github.com/Melidorado)
 
 ### 🖱️[click to see](https://agustinaardisana.github.io/TP3_matcheADAs_submarino/) 
 
