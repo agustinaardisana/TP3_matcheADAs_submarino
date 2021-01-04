@@ -26,7 +26,7 @@ const defineItemSize = (numberOfRows) => {
 };
 
 const responsiveSizing = () => {
-  const mobileSize = window.matchMedia("(max-width: 512px)");
+  const mobileSize = window.matchMedia("(max-width: 575.98px)");
   const mobileSizeSmaller = window.matchMedia("(max-width: 350px)");
   if (mobileSizeSmaller.matches) {
     gridSize = 290;
