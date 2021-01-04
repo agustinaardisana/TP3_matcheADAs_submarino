@@ -47,7 +47,7 @@ const containerGridSize = () => {
 
 const createSquare = (x, y, items) => {
   const square = document.createElement("div");
-
+  square.addEventListener("click", storeClicksOnItems);
   square.dataset.x = x;
   square.dataset.y = y;
   square.style.height = `${itemSize}px`;
@@ -105,27 +105,44 @@ const selectItems = (firstClickedSquare) => {
 /**
  * Listens to the clicks and stores them in order to compare their positions later
  */
-const storeClicksOnItems = () => {
-  const allSquares = document.querySelectorAll("#grid > div");
 
-  let firstClickedSquare = "";
-  let secondClickedSquare = "";
+let secondClickedSquare = "";
 
-  for (let square of allSquares) {
-    square.onclick = (e) => {
-      firstClickedSquare = e.target;
-      selectItems(firstClickedSquare);
+const isTheSameItemSelected = (firstClickedSquare, secondClickedSquare) => {
+  if (secondClickedSquare) {
+    return (
+      secondClickedSquare.dataset.x &&
+      secondClickedSquare.dataset.y === firstClickedSquare.dataset.x &&
+      firstClickedSquare.dataset.y
+    );
+  }
+  return false;
+};
 
-      for (let secondSquare of allSquares) {
-        secondSquare.onclick = (e) => {
-          secondClickedSquare = e.target;
+const deleteSelection = (firstClickedSquare, secondClickedSquare) => {
+  firstClickedSquare.classList.remove("selected");
+  secondClickedSquare.classList.remove("selected");
+};
 
-          if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
-            changePositions(firstClickedSquare, secondClickedSquare);
-          }
-        };
+const storeClicksOnItems = (e) => {
+  let firstClickedSquare = e.target; // CLICK
+
+  if (!firstClickedSquare.className.includes("selected")) {
+    firstClickedSquare.classList.add("selected");
+
+    if (secondClickedSquare && !isTheSameItemSelected(firstClickedSquare)) {
+      deleteSelection(secondClickedSquare, firstClickedSquare);
+
+      if (areAdjacent(secondClickedSquare, firstClickedSquare)) {
+        changePositions(secondClickedSquare, firstClickedSquare);
+        secondClickedSquare = "";
+      } else {
+        secondClickedSquare = firstClickedSquare;
+        firstClickedSquare.classList.add("selected");
       }
-    };
+    } else {
+      secondClickedSquare = firstClickedSquare;
+    }
   }
 };
 
@@ -206,7 +223,7 @@ const startGame = (width, height) => {
   defineItemSize(width);
   createGridArray(width, height);
   createGridStructure();
-  storeClicksOnItems();
+  // storeClicksOnItems();
 };
 
 /**
