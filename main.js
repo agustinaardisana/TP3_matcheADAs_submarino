@@ -4,10 +4,12 @@ let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦞"
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
+const paddingAndBorder = 42
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
+const controlsContainer = document.querySelector(".container.controls")
 
 // -------------------------------------🐠
 
@@ -24,7 +26,7 @@ const defineItemSize = (numberOfRows) => {
 };
 
 const responsiveSizing = () => {
-  const mobileSize = window.matchMedia("(max-width: 500px)");
+  const mobileSize = window.matchMedia("(max-width: 512px)");
   const mobileSizeSmaller = window.matchMedia("(max-width: 350px)");
   if (mobileSizeSmaller.matches) {
     gridSize = 290;
@@ -41,8 +43,9 @@ gridWidth = responsiveSizing();
 const containerGridSize = () => {
   grid.style.width = `${gridWidth}px`;
   grid.style.height = `${gridWidth}px`;
-  gridContainer.style.width = `${gridWidth + 20}px`;
-  gridContainer.style.height = `${gridWidth + 20}px`;
+  gridContainer.style.width = `${gridWidth + paddingAndBorder}px`;
+  gridContainer.style.height = `${gridWidth + paddingAndBorder}px`;
+  controlsContainer.style.width = `${gridWidth + paddingAndBorder}px`;
 };
 
 const createSquare = (x, y, items) => {

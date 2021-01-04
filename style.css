@@ -29,34 +29,34 @@ h1 {
   margin-bottom: 20px;
   color: #ffc06c;
   font-size: 60px;
-  text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa,
-    -1px 1px #1d8caa, 2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff,
-    -2px 2px #ffffff;
+  text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa, -1px 1px #1d8caa, 2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff, -2px 2px #ffffff;
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   width: 500px;
-  border: 1px solid #ffffff;
   padding: 20px;
-  border-radius: 5px;
   background-color: #1d8caa;
 }
 
-.container-score,
-.container-buttons {
+.container, .selected {
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+}
+
+.container-score, .container-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.container-score > p {
+.container-score>p {
   margin-right: 10px;
   color: #ffffff;
 }
 
-.container-buttons > button {
+.container-buttons>button {
   margin-right: 5px;
   font-size: 18px;
   color: #ffffff;
@@ -86,24 +86,27 @@ h1 {
   cursor: pointer;
 }
 
-#grid > div {
+#grid>div {
   position: absolute;
   text-align: center;
   vertical-align: baseline;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.selected {
-  border: black 2px solid;
-}
 /* ------------------------------------ Efecto Clickeable */
+
 .emoji {
   animation-iteration-count: 1;
 }
+
 .clickable {
   animation-name: clickable;
   animation-duration: 1s;
 }
+
 @keyframes clickable {
   20% {
     transform: scale(0.7);
@@ -117,12 +120,12 @@ h1 {
 }
 
 /* ------------------------------------ Responsive */
-@media (max-width:500px) {
-    #grid > div {
-        text-align: revert;
-    }
 
-    #grid {
-        font-size: 25px;
-    }
+@media (max-width:500px) {
+  #grid>div {
+    text-align: revert;
+  }
+  #grid {
+    font-size: 25px;
+  }
 }
