@@ -1,6 +1,6 @@
 // -------------------------------------🐠 Variables JS
 let itemSize = 0;
-let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦞"];
+let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦦"];
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
@@ -143,7 +143,7 @@ const createNewEmojis = (arrayMatches) => {
       let y = arrayMatches[i][1];
       displayNewEmojisJS(listOfItems, x, y)
       let match = selectMatchHTML(x,y)
-      match.classList.add('hidden'); ////Cambiar por una animacion
+      match.innerHTML = ''
   
       displayNewEmojisHTML(match,x,y)
     } 
@@ -170,7 +170,7 @@ const displayNewEmojisHTML = (match,x,y) => {
       verticalMatches()
       horizontalMatches()
     }
-  }, 700);
+  }, 200);
 }
 
 /**
