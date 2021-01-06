@@ -120,10 +120,10 @@ const storeClicksOnItems = (e) => {
       if (thereAreMatches()) {
         verticalMatches()
         horizontalMatches()
-        firstClickedSquare = null
-        secondClickedSquare = null
         firstClickedSquare.classList.remove("selected")
         secondClickedSquare.classList.remove("selected")
+        firstClickedSquare = null
+        secondClickedSquare = null
       }
       else {
         setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)
@@ -171,7 +171,6 @@ const selectMatchHTML = (x, y) => {
 const displayNewEmojisHTML = (match, x, y) => {
   setTimeout(() => {
     match.innerHTML = `${listOfItems[x][y]}`;
-    match.classList.remove('hidden');
     if (thereAreMatches()) {
       verticalMatches()
       horizontalMatches()
