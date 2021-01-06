@@ -113,13 +113,17 @@ h1 {
   }
 }
 
+.hidden {
+  display: none;
+}
+
+/* ------------------------------------ Responsive */
+
 @media (max-width: 575.98px) {
   .container {
     max-width: 352px;
   }
 }
-
-/* ------------------------------------ Responsive */
 
 @media (max-width:500px) {
   #grid>div {

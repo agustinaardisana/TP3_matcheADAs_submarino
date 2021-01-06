@@ -106,48 +106,72 @@ const selectItems = (firstClickedSquare) => {
 };
 
 /**
- * Listens to the clicks and stores them in order to compare their positions later
+ * Listens to the clicks, sores them and looks for new matches
  */
 
-let secondClickedSquare = "";
-
-const isTheSameItemSelected = (firstClickedSquare, secondClickedSquare) => {
-  if (secondClickedSquare) {
-    return (
-      secondClickedSquare.dataset.x &&
-      secondClickedSquare.dataset.y === firstClickedSquare.dataset.x &&
-      firstClickedSquare.dataset.y
-    );
-  }
-  return false;
-};
-
-const deleteSelection = (firstClickedSquare, secondClickedSquare) => {
-  firstClickedSquare.classList.remove("selected");
-  secondClickedSquare.classList.remove("selected");
-};
-
 const storeClicksOnItems = (e) => {
-  let firstClickedSquare = e.target; // CLICK
+  let firstClickedSquare = document.querySelector(".selected")
 
-  if (!firstClickedSquare.className.includes("selected")) {
-    firstClickedSquare.classList.add("selected");
+  if (firstClickedSquare != null) {
 
-    if (secondClickedSquare && !isTheSameItemSelected(firstClickedSquare)) {
-      deleteSelection(secondClickedSquare, firstClickedSquare);
-
-      if (areAdjacent(secondClickedSquare, firstClickedSquare)) {
-        changePositions(secondClickedSquare, firstClickedSquare);
-        secondClickedSquare = "";
+    let secondClickedSquare = e.target
+    if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
+      changePositions(firstClickedSquare, secondClickedSquare)
+      if (thereAreMatches()) {
+          verticalMatches()
+          horizontalMatches()
+          console.log('hay matches')
       } else {
-        secondClickedSquare = firstClickedSquare;
-        firstClickedSquare.classList.add("selected");
+          setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)               
       }
     } else {
-      secondClickedSquare = firstClickedSquare;
+          firstClickedSquare.classList.remove("selected")
+          secondClickedSquare.classList.add("selected") ///checkear, se puede mejorar
     }
-  }
+  } else {
+      let firstClickedSquare = e.target
+      firstClickedSquare.classList.add("selected")
+    }
 };
+
+/**
+ * Looks for new matches and replaces the emojis for new ones
+ */
+const createNewEmojis = (arrayMatches) => {
+    for (let i = 0; i < arrayMatches.length; i++) {
+      let x = arrayMatches[i][0];
+      let y = arrayMatches[i][1];
+      displayNewEmojisJS(listOfItems, x, y)
+      let match = selectMatchHTML(x,y)
+      match.classList.add('hidden'); ////Cambiar por una animacion
+  
+      displayNewEmojisHTML(match,x,y)
+    } 
+  }
+
+const displayNewEmojisJS = (array, x, y) => {
+  for (let i = 0; i < array.length; i++) {
+  listOfItems[x][y] = getRandomItems(seaCreaturesArray)
+  }
+  return listOfItems[x][y]
+}
+
+const selectMatchHTML = (x,y) => {
+  return document.querySelector(
+    `div[data-x='${[x]}'][data-y='${[y]}']`,
+  );
+};
+
+const displayNewEmojisHTML = (match,x,y) => {
+  setTimeout(() => {
+    match.innerHTML = `${listOfItems[x][y]}`;
+    match.classList.remove('hidden');
+    if (thereAreMatches()) {
+      verticalMatches()
+      horizontalMatches()
+    }
+  }, 700);
+}
 
 /**
  * Compares the position of each clicked square and checks whether they are adjacent or not
@@ -213,6 +237,11 @@ const changePositions = (firstSquare, secondSquare) => {
 };
 
 /**
+ * Finds matches
+ */
+
+
+/**
  * Starts game whitout initial matches
  */
 const startDifficultGame = () => {
@@ -234,9 +263,53 @@ const startGame = (width, height) => {
  */
 
 const thereAreMatches = () => {
-  return verticalMatches().length > 0 || horizontalMatches().length > 0;
+  return thereAreVerticalMatches() || thereAreHorizontalMatches()
 };
 
+/**
+ * Checks whether matches exist or not
+ * 
+ */
+const thereAreVerticalMatches = () => {
+  let verticalMatch = [];
+
+  for (let i = 0; i < listOfItems.length; i++) {
+    for (let j = 0; j < listOfItems[i].length; j++) {
+      if (
+        listOfItems[i + 1] &&
+        listOfItems[i + 2] &&
+        listOfItems[i][j] === listOfItems[i + 1][j] &&
+        listOfItems[i][j] === listOfItems[i + 2][j]
+      ) {
+        return true
+      }
+    }
+  }
+return false
+};
+
+const thereAreHorizontalMatches = () => {
+  let horizontalMatch = [];
+
+  for (let i = 0; i < listOfItems.length; i++) {
+    for (let j = 0; j < listOfItems[i].length; j++) {
+      if (
+        listOfItems[j + 1] &&
+        listOfItems[j + 2] &&
+        listOfItems[i][j] === listOfItems[i][j + 1] &&
+        listOfItems[i][j] === listOfItems[i][j + 2]
+      ) {
+        return true
+      }
+    }
+  }
+return false
+};
+
+/**
+ * Finds the existing matches
+ * 
+ */
 const verticalMatches = () => {
   let verticalMatch = [];
 
@@ -256,7 +329,7 @@ const verticalMatches = () => {
       }
     }
   }
-  return verticalMatch;
+  createNewEmojis(verticalMatch)
 };
 
 const horizontalMatches = () => {
@@ -278,7 +351,7 @@ const horizontalMatches = () => {
       }
     }
   }
-  return horizontalMatch;
+  createNewEmojis(horizontalMatch)
 };
 
 const emptyHTMLGrid = () => {
