@@ -39,7 +39,7 @@
     </main>
 
     <!-- Modals -->
-    <div class="overlay start-game">
+    <div class="overlay start-game hidden">
         <section class="popup-welcome" aria-modal="true" 
         aria-label="Instrucciones del juego" role="dialog">
             <h2>¡Bienvenidx!</h2>
@@ -56,6 +56,18 @@
         </section>
     </div>
 
+    <div class="overlay game-difficulty">
+        <section class="popup-difficulty" aria-modal="true" 
+        aria-label="Dificultad del juego" role="dialog">
+            <h2>Nuevo Juego</h2>
+            <p>Elige una dificultad</p>
+            <div class="modal-buttons">
+                <button class="modals-buttons game-easy">Fácil</button>
+                <button class="modals-buttons game-normal">Normal</button>
+                <button class="modals-buttons game-difficult">Dificil</button>   
+            </div>            
+        </section>
+    </div>
 
     <script src="main.js"></script>
 </body>

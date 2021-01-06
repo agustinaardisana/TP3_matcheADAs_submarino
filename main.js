@@ -145,3 +145,4 @@ playGameButton.onclick = () => {
     hideModal(startGameModal);
     startGame(6, 6);
 }
+
