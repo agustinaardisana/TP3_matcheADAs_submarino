@@ -118,51 +118,57 @@ const storeClicksOnItems = (e) => {
     if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
       changePositions(firstClickedSquare, secondClickedSquare)
       if (thereAreMatches()) {
-          verticalMatches()
-          horizontalMatches()
-          console.log('hay matches')
-      } else {
-          setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)               
+        verticalMatches()
+        horizontalMatches()
+        firstClickedSquare = null
+        secondClickedSquare = null
+        firstClickedSquare.classList.remove("selected")
+        secondClickedSquare.classList.remove("selected")
       }
-    } else {
-          firstClickedSquare.classList.remove("selected")
-          secondClickedSquare.classList.add("selected") ///checkear, se puede mejorar
+      else {
+        setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)
+      }
     }
-  } else {
-      let firstClickedSquare = e.target
-      firstClickedSquare.classList.add("selected")
+    else {
+      firstClickedSquare.classList.remove("selected")
+      secondClickedSquare.classList.add("selected") ///checkear, se puede mejorar
     }
+  }
+  else {
+    let firstClickedSquare = e.target
+    firstClickedSquare.classList.add("selected")
+  }
 };
 
 /**
  * Looks for new matches and replaces the emojis for new ones
  */
 const createNewEmojis = (arrayMatches) => {
-    for (let i = 0; i < arrayMatches.length; i++) {
-      let x = arrayMatches[i][0];
-      let y = arrayMatches[i][1];
-      displayNewEmojisJS(listOfItems, x, y)
-      let match = selectMatchHTML(x,y)
-      match.innerHTML = ''
-  
-      displayNewEmojisHTML(match,x,y)
-    } 
+  for (let i = 0; i < arrayMatches.length; i++) {
+    let x = arrayMatches[i][0];
+    let y = arrayMatches[i][1];
+    displayNewEmojisJS(listOfItems, x, y)
+    let match = selectMatchHTML(x, y)
+    match.innerHTML = ''
+
+    displayNewEmojisHTML(match, x, y)
   }
+}
 
 const displayNewEmojisJS = (array, x, y) => {
   for (let i = 0; i < array.length; i++) {
-  listOfItems[x][y] = getRandomItems(seaCreaturesArray)
+    listOfItems[x][y] = getRandomItems(seaCreaturesArray)
   }
   return listOfItems[x][y]
 }
 
-const selectMatchHTML = (x,y) => {
+const selectMatchHTML = (x, y) => {
   return document.querySelector(
     `div[data-x='${[x]}'][data-y='${[y]}']`,
   );
 };
 
-const displayNewEmojisHTML = (match,x,y) => {
+const displayNewEmojisHTML = (match, x, y) => {
   setTimeout(() => {
     match.innerHTML = `${listOfItems[x][y]}`;
     match.classList.remove('hidden');
@@ -285,7 +291,7 @@ const thereAreVerticalMatches = () => {
       }
     }
   }
-return false
+  return false
 };
 
 const thereAreHorizontalMatches = () => {
@@ -303,7 +309,7 @@ const thereAreHorizontalMatches = () => {
       }
     }
   }
-return false
+  return false
 };
 
 /**
