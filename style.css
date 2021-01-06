@@ -21,8 +21,8 @@ button {
   background-image: url(img/background.png);
   background-repeat: no-repeat;
   background-position: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,11 +63,6 @@ h1 {
 
 .container-buttons > button {
   margin-right: 5px;
-  /*font-size: 18px;
-  color: #ffffff;
-  border: none;
-  border-radius: 3px;
-  background-color: #1d8caa;*/
   padding: 8px;
 }
 
@@ -109,8 +104,8 @@ h1 {
     align-items: center;
 }
 
-.popup-welcome {
-  max-width: 600px;
+.popup-welcome, .popup-difficulty {
+  width: 480px;
   background-color: #fff;
   padding: 30px 20px;
   border-radius: 10px;
@@ -144,17 +139,6 @@ h1 {
 .play-game {
   align-self: flex-end;
   margin-right: 20px;
-}
-
-
-.popup-difficulty {
-  width: 480px;
-  background-color: #fff;
-  padding: 30px 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .popup-difficulty h2 {

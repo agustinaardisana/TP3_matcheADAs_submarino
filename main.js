@@ -4,6 +4,7 @@ let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦞"
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
+let difficulty = 0;
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
@@ -135,14 +136,42 @@ const areAdjacent = (firstSquare, secondSquare) => {
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector('.start-game');
 const playGameButton = document.querySelector('.play-game');
+const gameDifficultyModal = document.querySelector('.game-difficulty');
+const easyButton = document.querySelector('.game-easy');
+const normalButton = document.querySelector('.game-normal');
+const difficultButton = document.querySelector('.game-difficult');
+
 
 //-------------------------------------🐠 General Actions
 const hideModal = modal => modal.classList.add('hidden');
 const showModal = modal => modal.classList.remove('hidden');
 
+startGame(6, 6);
 
-playGameButton.onclick = () => {
-    hideModal(startGameModal);
-    startGame(6, 6);
-}
+// // Start Game
+// playGameButton.onclick = () => {
+//     hideModal(startGameModal);
+//     selectDifficulty();
+// }
 
+// // Select Difficulty
+// const selectDifficulty = () => {
+//   showModal(gameDifficultyModal);
+//   easyButton.onclick = () => {
+//     startGame(9, 9);
+//     difficulty = 9;
+//     hideModal(gameDifficultyModal);
+//   }
+
+//   normalButton.onclick = () => {
+//     startGame(8, 8);
+//     difficulty = 8;
+//     hideModal(gameDifficultyModal);
+//   }
+
+//   difficultButton.onclick = () => {
+//     startGame(7, 7);
+//     difficulty = 7;
+//     hideModal(gameDifficultyModal);
+//   }
+// }
