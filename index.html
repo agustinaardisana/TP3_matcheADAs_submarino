@@ -37,8 +37,37 @@
             <p><span class="timer-countdown">0:30</span></p>
         </div>
     </main>
-    <div class="overlay"></div>
 
+    <!-- Modals -->
+    <div class="overlay start-game hidden"><!-- Este hidden hay que sacarlo -->
+        <section class="popup-welcome" aria-modal="true" 
+        aria-label="Instrucciones del juego" role="dialog">
+            <h2>¡Bienvenidx!</h2>
+            <div class="modal-text">
+                <p>En MatcheADAs tu objetivo es juntar tres o más ítems del mismo tipo, ya sea en fila o columna. Para eso, selecciona un ítem y a continuación un ítem adyacente para intercambiarlos de lugar.</p>
+                <p>Si se forma un grupo, esos ítems se eliminarán y ganarás puntos. ¡Sigue armando grupos de 3 o más antes de que se acabe el tiempo!</p>
+                <p>Controles:
+                    <p>Click izquierdo: selección</p>
+                    <p>Enter o Espacio: selección</p>
+                    <p>Flechas o WASD: movimiento e intercambio</p>
+                </p>              
+            </div>
+            <button class="modals-buttons play-game">A Jugar</button>
+        </section>
+    </div>
+
+    <div class="overlay game-difficulty hidden">
+        <section class="popup-difficulty" aria-modal="true" 
+        aria-label="Dificultad del juego" role="dialog">
+            <h2>Nuevo Juego</h2>
+            <p>Elige una dificultad</p>
+            <div class="modal-buttons">
+                <button class="modals-buttons game-easy">Fácil</button>
+                <button class="modals-buttons game-normal">Normal</button>
+                <button class="modals-buttons game-difficult">Dificil</button>   
+            </div>            
+        </section>
+    </div>
 
     <script src="main.js"></script>
 </body>

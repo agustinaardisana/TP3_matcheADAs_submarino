@@ -9,6 +9,11 @@
 button {
   text-decoration: none;
   cursor: pointer;
+  font-size: 18px;
+  color: #ffffff;
+  border: none;
+  border-radius: 3px;
+  background-color: #1d8caa;
 }
 
 .background {
@@ -16,8 +21,8 @@ button {
   background-image: url(img/background.png);
   background-repeat: no-repeat;
   background-position: center;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,11 +63,6 @@ h1 {
 
 .container-buttons>button {
   margin-right: 5px;
-  font-size: 18px;
-  color: #ffffff;
-  border: none;
-  border-radius: 3px;
-  background-color: #1d8caa;
   padding: 8px;
 }
 
@@ -132,4 +132,85 @@ h1 {
   #grid {
     font-size: 25px;
   }
+}
+.overlay {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-welcome, .popup-difficulty {
+  width: 480px;
+  background-color: #fff;
+  padding: 30px 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-text {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.modal-text > p {
+  line-height: 1.5;
+}
+
+.modal-text > p:first-child {
+  margin-bottom: 15px;
+}
+
+.modal-text > p:nth-child(3) {
+  font-weight: 700;
+  margin: 40px 0 10px;
+}
+
+.modals-buttons {
+  padding: 8px 12px
+}
+
+.play-game {
+  align-self: flex-end;
+  margin-right: 20px;
+}
+
+.popup-difficulty h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  width: 250px;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* HIDE MODAL */
+.hidden {
+  display: none;
 }
