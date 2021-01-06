@@ -4,12 +4,12 @@ let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦦"
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
-const paddingAndBorder = 42
+const paddingAndBorder = 42;
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
-const controlsContainer = document.querySelector(".container.controls")
+const controlsContainer = document.querySelector(".container.controls");
 
 // -------------------------------------🐠
 
@@ -59,6 +59,7 @@ const createSquare = (x, y, items) => {
   square.style.left = `${y * itemSize}px`;
   square.innerHTML = items;
   square.classList.add("square");
+  square.classList.add("transition-effect");
   square.classList.add("emoji");
 
   return square;
@@ -110,33 +111,33 @@ const selectItems = (firstClickedSquare) => {
  */
 
 const storeClicksOnItems = (e) => {
-  let firstClickedSquare = document.querySelector(".selected")
+  let firstClickedSquare = document.querySelector(".selected");
 
   if (firstClickedSquare != null) {
-
-    let secondClickedSquare = e.target
+    let secondClickedSquare = e.target;
     if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
-      changePositions(firstClickedSquare, secondClickedSquare)
+      changePositions(firstClickedSquare, secondClickedSquare);
       if (thereAreMatches()) {
-        verticalMatches()
-        horizontalMatches()
-        firstClickedSquare = null
-        secondClickedSquare = null
-        firstClickedSquare.classList.remove("selected")
-        secondClickedSquare.classList.remove("selected")
+        verticalMatches();
+        horizontalMatches();
+
+        firstClickedSquare.classList.remove("selected");
+        secondClickedSquare.classList.remove("selected");
+        firstClickedSquare = null;
+        secondClickedSquare = null;
+      } else {
+        setTimeout(
+          () => changePositions(firstClickedSquare, secondClickedSquare),
+          400
+        );
       }
-      else {
-        setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)
-      }
+    } else {
+      firstClickedSquare.classList.remove("selected");
+      secondClickedSquare.classList.add("selected"); ///checkear, se puede mejorar
     }
-    else {
-      firstClickedSquare.classList.remove("selected")
-      secondClickedSquare.classList.add("selected") ///checkear, se puede mejorar
-    }
-  }
-  else {
-    let firstClickedSquare = e.target
-    firstClickedSquare.classList.add("selected")
+  } else {
+    let firstClickedSquare = e.target;
+    firstClickedSquare.classList.add("selected");
   }
 };
 
@@ -147,37 +148,35 @@ const createNewEmojis = (arrayMatches) => {
   for (let i = 0; i < arrayMatches.length; i++) {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
-    displayNewEmojisJS(listOfItems, x, y)
-    let match = selectMatchHTML(x, y)
-    match.innerHTML = ''
+    displayNewEmojisJS(listOfItems, x, y);
+    let match = selectMatchHTML(x, y);
+    match.innerHTML = "";
 
-    displayNewEmojisHTML(match, x, y)
+    displayNewEmojisHTML(match, x, y);
   }
-}
+};
 
 const displayNewEmojisJS = (array, x, y) => {
   for (let i = 0; i < array.length; i++) {
-    listOfItems[x][y] = getRandomItems(seaCreaturesArray)
+    listOfItems[x][y] = getRandomItems(seaCreaturesArray);
   }
-  return listOfItems[x][y]
-}
+  return listOfItems[x][y];
+};
 
 const selectMatchHTML = (x, y) => {
-  return document.querySelector(
-    `div[data-x='${[x]}'][data-y='${[y]}']`,
-  );
+  return document.querySelector(`div[data-x='${[x]}'][data-y='${[y]}']`);
 };
 
 const displayNewEmojisHTML = (match, x, y) => {
   setTimeout(() => {
     match.innerHTML = `${listOfItems[x][y]}`;
-    match.classList.remove('hidden');
+    match.classList.remove("hidden");
     if (thereAreMatches()) {
-      verticalMatches()
-      horizontalMatches()
+      verticalMatches();
+      horizontalMatches();
     }
   }, 200);
-}
+};
 
 /**
  * Compares the position of each clicked square and checks whether they are adjacent or not
@@ -246,7 +245,6 @@ const changePositions = (firstSquare, secondSquare) => {
  * Finds matches
  */
 
-
 /**
  * Starts game whitout initial matches
  */
@@ -254,6 +252,7 @@ const startDifficultGame = () => {
   do {
     emptyHTMLGrid();
     startGame(6, 6);
+    clickable();
   } while (thereAreMatches());
 };
 
@@ -269,12 +268,12 @@ const startGame = (width, height) => {
  */
 
 const thereAreMatches = () => {
-  return thereAreVerticalMatches() || thereAreHorizontalMatches()
+  return thereAreVerticalMatches() || thereAreHorizontalMatches();
 };
 
 /**
  * Checks whether matches exist or not
- * 
+ *
  */
 const thereAreVerticalMatches = () => {
   let verticalMatch = [];
@@ -287,11 +286,11 @@ const thereAreVerticalMatches = () => {
         listOfItems[i][j] === listOfItems[i + 1][j] &&
         listOfItems[i][j] === listOfItems[i + 2][j]
       ) {
-        return true
+        return true;
       }
     }
   }
-  return false
+  return false;
 };
 
 const thereAreHorizontalMatches = () => {
@@ -305,16 +304,16 @@ const thereAreHorizontalMatches = () => {
         listOfItems[i][j] === listOfItems[i][j + 1] &&
         listOfItems[i][j] === listOfItems[i][j + 2]
       ) {
-        return true
+        return true;
       }
     }
   }
-  return false
+  return false;
 };
 
 /**
  * Finds the existing matches
- * 
+ *
  */
 const verticalMatches = () => {
   let verticalMatch = [];
@@ -335,7 +334,7 @@ const verticalMatches = () => {
       }
     }
   }
-  createNewEmojis(verticalMatch)
+  createNewEmojis(verticalMatch);
 };
 
 const horizontalMatches = () => {
@@ -357,7 +356,7 @@ const horizontalMatches = () => {
       }
     }
   }
-  createNewEmojis(horizontalMatch)
+  createNewEmojis(horizontalMatch);
 };
 
 const emptyHTMLGrid = () => {
