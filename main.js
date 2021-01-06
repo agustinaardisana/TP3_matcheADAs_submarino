@@ -118,6 +118,7 @@ const storeClicksOnItems = (e) => {
     if (areAdjacent(firstClickedSquare, secondClickedSquare)) {
       changePositions(firstClickedSquare, secondClickedSquare);
       if (thereAreMatches()) {
+<<<<<<< HEAD
         verticalMatches();
         horizontalMatches();
 
@@ -130,6 +131,17 @@ const storeClicksOnItems = (e) => {
           () => changePositions(firstClickedSquare, secondClickedSquare),
           400
         );
+=======
+        verticalMatches()
+        horizontalMatches()
+        firstClickedSquare.classList.remove("selected")
+        secondClickedSquare.classList.remove("selected")
+        firstClickedSquare = null
+        secondClickedSquare = null
+      }
+      else {
+        setTimeout(() => changePositions(firstClickedSquare, secondClickedSquare), 400)
+>>>>>>> 6f52d16c2310505adeaf201bc4dd7a0756f2323e
       }
     } else {
       firstClickedSquare.classList.remove("selected");
@@ -170,7 +182,10 @@ const selectMatchHTML = (x, y) => {
 const displayNewEmojisHTML = (match, x, y) => {
   setTimeout(() => {
     match.innerHTML = `${listOfItems[x][y]}`;
+<<<<<<< HEAD
     match.classList.remove("hidden");
+=======
+>>>>>>> 6f52d16c2310505adeaf201bc4dd7a0756f2323e
     if (thereAreMatches()) {
       verticalMatches();
       horizontalMatches();
