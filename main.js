@@ -4,36 +4,35 @@ let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦭"
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
-const paddingAndBorder = 32
+const paddingAndBorder = 32;
 let difficulty = 0;
-let remainingTime = 30
-let timer = null
+let remainingTime = 30;
+let timer = null;
 let horizontalMatch = [];
 let verticalMatch = [];
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
-const controlsContainer = document.querySelector(".container.controls")
-const timerCountdown = document.querySelector(".timer-countdown")
+const controlsContainer = document.querySelector(".container.controls");
+const timerCountdown = document.querySelector(".timer-countdown");
 // -------------------------------------🐠 Modals
-const startGameModal = document.querySelector('.start-game');
-const playGameButton = document.querySelector('.play-game');
-const gameDifficultyModal = document.querySelector('.game-difficulty');
-const easyButton = document.querySelector('.game-easy');
-const normalButton = document.querySelector('.game-normal');
-const difficultButton = document.querySelector('.game-difficult');
-
+const startGameModal = document.querySelector(".start-game");
+const playGameButton = document.querySelector(".play-game");
+const gameDifficultyModal = document.querySelector(".game-difficulty");
+const easyButton = document.querySelector(".game-easy");
+const normalButton = document.querySelector(".game-normal");
+const difficultButton = document.querySelector(".game-difficult");
 
 //-------------------------------------🐠 General Actions
-const hideModal = modal => modal.classList.add('hidden');
-const showModal = modal => modal.classList.remove('hidden');
-
+const hideModal = (modal) => modal.classList.add("hidden");
+const showModal = (modal) => modal.classList.remove("hidden");
 
 // -------------------------------------🐠
 
-//Define grid size
-
+/**
+ * Defines grid size
+ */
 const responsiveSizing = () => {
   const mobileSize = window.matchMedia("(max-width: 575.98px)");
   const mobileSizeSmaller = window.matchMedia("(max-width: 350px)");
@@ -57,7 +56,7 @@ const containerGridSize = () => {
   controlsContainer.style.width = `${gridWidth + paddingAndBorder}px`;
 };
 
-// Create random items
+// -------------------------------------🐠 Create random items
 const getRandomNumber = (seaCreaturesArray) => {
   let arrayLength = seaCreaturesArray.length;
   return Math.floor(Math.random() * arrayLength);
@@ -129,7 +128,6 @@ const selectItems = (firstClickedSquare) => {
   }
 };
 
-
 /**
  * Listens to the clicks, sores them and looks for new matches
  */
@@ -147,7 +145,6 @@ const storeClicksOnItems = (e) => {
         horizontalMatches();
         createNewEmojis(horizontalMatch);
         resetClicks(firstClickedSquare, secondClickedSquare);
-        
       } else {
         setTimeout(
           () => changePositions(firstClickedSquare, secondClickedSquare),
@@ -156,7 +153,7 @@ const storeClicksOnItems = (e) => {
       }
     } else {
       firstClickedSquare.classList.remove("selected");
-      secondClickedSquare.classList.add("selected"); 
+      secondClickedSquare.classList.add("selected");
     }
   } else {
     let firstClickedSquare = e.target;
@@ -219,10 +216,9 @@ const thereAreMatches = () => {
 
 /**
  * When matches exits, it finds them
- * 
+ *
  */
 const verticalMatches = () => {
-
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
       if (
@@ -236,14 +232,13 @@ const verticalMatches = () => {
           [i + 1, j],
           [i + 2, j],
         ]);
-        return true
+        return true;
       }
     }
   }
 };
 
 const horizontalMatches = () => {
-
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
       if (
@@ -257,7 +252,7 @@ const horizontalMatches = () => {
           [i, j + 1],
           [i, j + 2],
         ]);
-        return true
+        return true;
       }
     }
   }
@@ -300,15 +295,14 @@ const displayNewEmojisHTML = (match, x, y) => {
     match.innerHTML = `${listOfItems[x][y]}`;
     if (thereAreMatches()) {
       verticalMatches();
-      createNewEmojis(verticalMatches)
+      createNewEmojis(verticalMatches);
       horizontalMatches();
-      createNewEmojis(horizontalMatches)
+      createNewEmojis(horizontalMatches);
     }
   }, 200);
 };
 
-
-// -----------Countdown
+// -------------------------------------🐠Countdown
 
 const countdown = () => {
   timerCountdown.textContent = `0:${remainingTime}`;
@@ -316,9 +310,8 @@ const countdown = () => {
   if (remainingTime > 0) {
     remainingTime--;
     timer = setTimeout(countdown, 1000); //--------COMENTADO TEMPORALMENTE PARA PODER TRABAJR TRANQUILAS----
-  }
-  else {
-    endGame();
+  } else {
+    //endGame();
   }
 };
 
@@ -349,30 +342,30 @@ const clickable = () => {
 playGameButton.onclick = () => {
   hideModal(startGameModal);
   selectDifficulty();
-}
+};
 
 // Select Difficulty
 const selectDifficulty = () => {
   showModal(gameDifficultyModal);
 
   easyButton.onclick = () => {
-    startEasyGame()
-    clearTimeout(timer)
-    countdown()
-  }
+    startEasyGame();
+    clearTimeout(timer);
+    countdown();
+  };
 
   normalButton.onclick = () => {
-    startNormalGame()
-    clearTimeout(timer)
-    countdown()
-  }
+    startNormalGame();
+    clearTimeout(timer);
+    countdown();
+  };
 
   difficultButton.onclick = () => {
-    startDifficultGame()
-    clearTimeout(timer)
-    countdown()
-  }
-}
+    startDifficultGame();
+    clearTimeout(timer);
+    countdown();
+  };
+};
 
 const startEasyGame = () => {
   do {
@@ -381,7 +374,7 @@ const startEasyGame = () => {
     difficulty = 9;
     hideModal(gameDifficultyModal);
   } while (thereAreMatches());
-}
+};
 
 const startNormalGame = () => {
   do {
@@ -390,7 +383,7 @@ const startNormalGame = () => {
     difficulty = 8;
     hideModal(gameDifficultyModal);
   } while (thereAreMatches());
-}
+};
 
 const startDifficultGame = () => {
   do {
@@ -410,4 +403,3 @@ const startGame = (width, height) => {
   createGridArray(width, height);
   createGridStructure();
 };
-
