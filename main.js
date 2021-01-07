@@ -4,13 +4,26 @@ let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦭"
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
-const paddingAndBorder = 42
+const paddingAndBorder = 32
 let difficulty = 0;
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls")
+// -------------------------------------🐠 Modals
+const startGameModal = document.querySelector('.start-game');
+const playGameButton = document.querySelector('.play-game');
+const gameDifficultyModal = document.querySelector('.game-difficulty');
+const easyButton = document.querySelector('.game-easy');
+const normalButton = document.querySelector('.game-normal');
+const difficultButton = document.querySelector('.game-difficult');
+
+
+//-------------------------------------🐠 General Actions
+const hideModal = modal => modal.classList.add('hidden');
+const showModal = modal => modal.classList.remove('hidden');
+
 
 // -------------------------------------🐠
 
@@ -242,26 +255,69 @@ const changePositions = (firstSquare, secondSquare) => {
   secondSquare.dataset.y = datay1;
 };
 
-/**
- * Finds matches
- */
-
 
 /**
  * Starts game whitout initial matches
  */
+
+// Start Game
+playGameButton.onclick = () => {
+  hideModal(startGameModal);
+  selectDifficulty();
+}
+
+// Select Difficulty
+const selectDifficulty = () => {
+  showModal(gameDifficultyModal);
+
+  easyButton.onclick = () => {
+    startEasyGame()
+  }
+
+  normalButton.onclick = () => {
+    startNormalGame()
+  }
+
+  difficultButton.onclick = () => {
+    startDifficultGame()
+  }
+}
+
+const startEasyGame = () => {
+  do {
+    emptyHTMLGrid();
+    startGame(9, 9);
+    difficulty = 9;
+    hideModal(gameDifficultyModal);
+  } while (thereAreMatches());
+}
+
+const startNormalGame = () => {
+  do {
+    emptyHTMLGrid();
+    startGame(8, 8);
+    difficulty = 8;
+    hideModal(gameDifficultyModal);
+  } while (thereAreMatches());
+}
+
 const startDifficultGame = () => {
   do {
     emptyHTMLGrid();
-    startGame(6, 6);
+    startGame(7, 7);
+    difficulty = 7;
+    hideModal(gameDifficultyModal);
   } while (thereAreMatches());
+};
+
+const emptyHTMLGrid = () => {
+  grid.textContent = "";
 };
 
 const startGame = (width, height) => {
   defineItemSize(width);
   createGridArray(width, height);
   createGridStructure();
-  // storeClicksOnItems();
 };
 
 /**
@@ -313,7 +369,7 @@ const thereAreHorizontalMatches = () => {
 };
 
 /**
- * Finds the existing matches
+ * When matches exits, it finds them
  * 
  */
 const verticalMatches = () => {
@@ -360,51 +416,6 @@ const horizontalMatches = () => {
   createNewEmojis(horizontalMatch)
 };
 
-const emptyHTMLGrid = () => {
-  grid.textContent = "";
-};
-
-//----------THIS WILL BE REPLACED ONCE WE HAVE THE DIFFICULTY.ONCLICK FUNCTIONS WORKING-----
-startDifficultGame();
-
-// -------------------------------------🐠 Modals
-const startGameModal = document.querySelector('.start-game');
-const playGameButton = document.querySelector('.play-game');
-const gameDifficultyModal = document.querySelector('.game-difficulty');
-const easyButton = document.querySelector('.game-easy');
-const normalButton = document.querySelector('.game-normal');
-const difficultButton = document.querySelector('.game-difficult');
 
 
-//-------------------------------------🐠 General Actions
-const hideModal = modal => modal.classList.add('hidden');
-const showModal = modal => modal.classList.remove('hidden');
 
-
-// // Start Game
-// playGameButton.onclick = () => {
-//     hideModal(startGameModal);
-//     selectDifficulty();
-// }
-
-// // Select Difficulty
-// const selectDifficulty = () => {
-//   showModal(gameDifficultyModal);
-//   easyButton.onclick = () => {
-//     startGame(9, 9);
-//     difficulty = 9;
-//     hideModal(gameDifficultyModal);
-//   }
-
-//   normalButton.onclick = () => {
-//     startGame(8, 8);
-//     difficulty = 8;
-//     hideModal(gameDifficultyModal);
-//   }
-
-//   difficultButton.onclick = () => {
-//     startGame(7, 7);
-//     difficulty = 7;
-//     hideModal(gameDifficultyModal);
-//   }
-// }

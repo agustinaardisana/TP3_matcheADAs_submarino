@@ -23,6 +23,7 @@ button {
   background-position: center;
   width: 100%;
   height: 100%;
+  min-height: 100vh; /* para que se vea completo al empezar la partida, se puede sacra si les molesta */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,34 +35,38 @@ h1 {
   margin-bottom: 20px;
   color: #ffc06c;
   font-size: 60px;
-  text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa, -1px 1px #1d8caa, 2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff, -2px 2px #ffffff;
+  text-shadow: 1px 1px #1d8caa, 1px -1px #1d8caa, -1px -1px #1d8caa,
+    -1px 1px #1d8caa, 2px 2px #ffffff, 2px -2px #ffffff, -2px -2px #ffffff,
+    -2px 2px #ffffff;
 }
 
 .container {
   display: flex;
   justify-content: space-between;
   width: 500px;
-  padding: 20px;
+  padding: 15px;
   background-color: #1d8caa;
 }
 
-.container, .selected {
+.container,
+.selected {
   border: 1px solid #ffffff;
   border-radius: 5px;
 }
 
-.container-score, .container-buttons {
+.container-score,
+.container-buttons {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.container-score>p {
+.container-score > p {
   margin-right: 10px;
   color: #ffffff;
 }
 
-.container-buttons>button {
+.container-buttons > button {
   margin-right: 5px;
   padding: 8px;
 }
@@ -86,7 +91,7 @@ h1 {
   cursor: pointer;
 }
 
-#grid>div {
+#grid > div {
   position: absolute;
   text-align: center;
   vertical-align: baseline;
@@ -94,6 +99,11 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.transition-effect {
+  transition: background-color 0.4s, top 0.4s, left 0.4s, bottom 0.4s,
+    right 0.4s, transform 0.2s;
 }
 
 /* ------------------------------------ Efecto Clickeable */
@@ -125,8 +135,8 @@ h1 {
   }
 }
 
-@media (max-width:500px) {
-  #grid>div {
+@media (max-width: 500px) {
+  #grid > div {
     text-align: revert;
   }
   #grid {
