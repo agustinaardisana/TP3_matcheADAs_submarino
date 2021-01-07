@@ -6,11 +6,16 @@ let items = "";
 let gridWidth = "";
 const paddingAndBorder = 32
 let difficulty = 0;
+let remainingTime = 30
+let timer = null
+let horizontalMatch = [];
+let verticalMatch = [];
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls")
+const timerCountdown = document.querySelector(".timer-countdown")
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector('.start-game');
 const playGameButton = document.querySelector('.play-game');
@@ -27,17 +32,7 @@ const showModal = modal => modal.classList.remove('hidden');
 
 // -------------------------------------🐠
 
-const getRandomNumber = (seaCreaturesArray) => {
-  let arrayLength = seaCreaturesArray.length;
-  return Math.floor(Math.random() * arrayLength);
-};
-const getRandomItems = (seaCreaturesArray) => {
-  return seaCreaturesArray[getRandomNumber(seaCreaturesArray)];
-};
-
-const defineItemSize = (numberOfRows) => {
-  itemSize = gridWidth / numberOfRows;
-};
+//Define grid size
 
 const responsiveSizing = () => {
   const mobileSize = window.matchMedia("(max-width: 575.98px)");
@@ -60,6 +55,19 @@ const containerGridSize = () => {
   gridContainer.style.width = `${gridWidth + paddingAndBorder}px`;
   gridContainer.style.height = `${gridWidth + paddingAndBorder}px`;
   controlsContainer.style.width = `${gridWidth + paddingAndBorder}px`;
+};
+
+// Create random items
+const getRandomNumber = (seaCreaturesArray) => {
+  let arrayLength = seaCreaturesArray.length;
+  return Math.floor(Math.random() * arrayLength);
+};
+const getRandomItems = (seaCreaturesArray) => {
+  return seaCreaturesArray[getRandomNumber(seaCreaturesArray)];
+};
+
+const defineItemSize = (numberOfRows) => {
+  itemSize = gridWidth / numberOfRows;
 };
 
 const createSquare = (x, y, items) => {
@@ -109,6 +117,7 @@ const createGridStructure = () => {
 
   return grid;
 };
+
 // -------------------------------------🐠 Select Items
 /**
  * Gives a selected class to the first div clicked
@@ -120,12 +129,6 @@ const selectItems = (firstClickedSquare) => {
   }
 };
 
-const resetClicks = (firstClickedSquare, secondClickedSquare) => {
-  firstClickedSquare.classList.remove("selected");
-  secondClickedSquare.classList.remove("selected");
-  firstClickedSquare = null;
-  secondClickedSquare = null;
-};
 
 /**
  * Listens to the clicks, sores them and looks for new matches
@@ -140,12 +143,11 @@ const storeClicksOnItems = (e) => {
       changePositions(firstClickedSquare, secondClickedSquare);
       if (thereAreMatches()) {
         verticalMatches();
+        createNewEmojis(verticalMatch);
         horizontalMatches();
+        createNewEmojis(horizontalMatch);
         resetClicks(firstClickedSquare, secondClickedSquare);
-        // firstClickedSquare.classList.remove("selected");
-        // secondClickedSquare.classList.remove("selected");
-        // firstClickedSquare = null;
-        // secondClickedSquare = null;
+        
       } else {
         setTimeout(
           () => changePositions(firstClickedSquare, secondClickedSquare),
@@ -154,12 +156,118 @@ const storeClicksOnItems = (e) => {
       }
     } else {
       firstClickedSquare.classList.remove("selected");
-      secondClickedSquare.classList.add("selected"); ///checkear, se puede mejorar
+      secondClickedSquare.classList.add("selected"); 
     }
   } else {
     let firstClickedSquare = e.target;
     firstClickedSquare.classList.add("selected");
   }
+};
+
+/**
+ * Compares the position of each clicked square and checks whether they are adjacent or not
+ * @param {div} firstSquare
+ * @param {div} secondSquare
+ */
+const areAdjacent = (firstSquare, secondSquare) => {
+  const datax1 = Number(firstSquare.dataset.x);
+  const datay1 = Number(firstSquare.dataset.y);
+  const datax2 = Number(secondSquare.dataset.x);
+  const datay2 = Number(secondSquare.dataset.y);
+
+  if (
+    (datax1 === datax2 && datay1 === datay2 + 1) ||
+    (datax1 === datax2 && datay1 === datay2 - 1) ||
+    (datay1 === datay2 && datax1 === datax2 + 1) ||
+    (datay1 === datay2 && datax1 === datax2 - 1)
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+/**
+ * Changes the position of two selected divs
+ * @param {div} firstSquare
+ * @param {div} secondSquare
+ */
+const changePositions = (firstSquare, secondSquare) => {
+  const datax1 = Number(firstSquare.dataset.x);
+  const datax2 = Number(secondSquare.dataset.x);
+  const datay1 = Number(firstSquare.dataset.y);
+  const datay2 = Number(secondSquare.dataset.y);
+
+  let tempVariable = listOfItems[datax1][datay1];
+  listOfItems[datax1][datay1] = listOfItems[datax2][datay2];
+  listOfItems[datax2][datay2] = tempVariable;
+
+  firstSquare.style.top = `${datax2 * itemSize}px`;
+  secondSquare.style.top = `${datax1 * itemSize}px`;
+  firstSquare.style.left = `${datay2 * itemSize}px`;
+  secondSquare.style.left = `${datay1 * itemSize}px`;
+
+  firstSquare.dataset.x = datax2;
+  secondSquare.dataset.x = datax1;
+  firstSquare.dataset.y = datay2;
+  secondSquare.dataset.y = datay1;
+};
+
+const thereAreMatches = () => {
+  return verticalMatches() || horizontalMatches();
+};
+
+/**
+ * When matches exits, it finds them
+ * 
+ */
+const verticalMatches = () => {
+
+  for (let i = 0; i < listOfItems.length; i++) {
+    for (let j = 0; j < listOfItems[i].length; j++) {
+      if (
+        listOfItems[i + 1] &&
+        listOfItems[i + 2] &&
+        listOfItems[i][j] === listOfItems[i + 1][j] &&
+        listOfItems[i][j] === listOfItems[i + 2][j]
+      ) {
+        verticalMatch = verticalMatch.concat([
+          [i, j],
+          [i + 1, j],
+          [i + 2, j],
+        ]);
+        return true
+      }
+    }
+  }
+};
+
+const horizontalMatches = () => {
+
+  for (let i = 0; i < listOfItems.length; i++) {
+    for (let j = 0; j < listOfItems[i].length; j++) {
+      if (
+        listOfItems[j + 1] &&
+        listOfItems[j + 2] &&
+        listOfItems[i][j] === listOfItems[i][j + 1] &&
+        listOfItems[i][j] === listOfItems[i][j + 2]
+      ) {
+        horizontalMatch = horizontalMatch.concat([
+          [i, j],
+          [i, j + 1],
+          [i, j + 2],
+        ]);
+        return true
+      }
+    }
+  }
+};
+
+const resetClicks = (firstClickedSquare, secondClickedSquare) => {
+  firstClickedSquare.classList.remove("selected");
+  secondClickedSquare.classList.remove("selected");
+  firstClickedSquare = null;
+  secondClickedSquare = null;
 };
 
 /**
@@ -192,32 +300,27 @@ const displayNewEmojisHTML = (match, x, y) => {
     match.innerHTML = `${listOfItems[x][y]}`;
     if (thereAreMatches()) {
       verticalMatches();
+      createNewEmojis(verticalMatches)
       horizontalMatches();
+      createNewEmojis(horizontalMatches)
     }
   }, 200);
 };
 
-/**
- * Compares the position of each clicked square and checks whether they are adjacent or not
- * @param {div} firstSquare
- * @param {div} secondSquare
- */
-const areAdjacent = (firstSquare, secondSquare) => {
-  const datax1 = Number(firstSquare.dataset.x);
-  const datay1 = Number(firstSquare.dataset.y);
-  const datax2 = Number(secondSquare.dataset.x);
-  const datay2 = Number(secondSquare.dataset.y);
 
-  if (
-    (datax1 === datax2 && datay1 === datay2 + 1) ||
-    (datax1 === datax2 && datay1 === datay2 - 1) ||
-    (datay1 === datay2 && datax1 === datax2 + 1) ||
-    (datay1 === datay2 && datax1 === datax2 - 1)
-  ) {
-    return true;
-  } else {
-    return false;
+// -----------Countdown
+
+const countdown = () => {
+  timerCountdown.textContent = `0:${remainingTime}`;
+
+  if (remainingTime > 0) {
+    remainingTime--;
+    timer = setTimeout(countdown, 1000); //--------COMENTADO TEMPORALMENTE PARA PODER TRABAJR TRANQUILAS----
   }
+  else {
+    //endGame();
+  }
+
 };
 
 // -------------------------------------🐠 Clickable Effect
@@ -235,33 +338,6 @@ const clickable = () => {
 };
 
 /**
- * Changes the position of two selected divs
- * @param {div} firstSquare
- * @param {div} secondSquare
- */
-const changePositions = (firstSquare, secondSquare) => {
-  const datax1 = Number(firstSquare.dataset.x);
-  const datax2 = Number(secondSquare.dataset.x);
-  const datay1 = Number(firstSquare.dataset.y);
-  const datay2 = Number(secondSquare.dataset.y);
-
-  let tempVariable = listOfItems[datax1][datay1];
-  listOfItems[datax1][datay1] = listOfItems[datax2][datay2];
-  listOfItems[datax2][datay2] = tempVariable;
-
-  firstSquare.style.top = `${datax2 * itemSize}px`;
-  secondSquare.style.top = `${datax1 * itemSize}px`;
-  firstSquare.style.left = `${datay2 * itemSize}px`;
-  secondSquare.style.left = `${datay1 * itemSize}px`;
-
-  firstSquare.dataset.x = datax2;
-  secondSquare.dataset.x = datax1;
-  firstSquare.dataset.y = datay2;
-  secondSquare.dataset.y = datay1;
-};
-
-
-/**
  * Starts game whitout initial matches
  */
 
@@ -277,14 +353,20 @@ const selectDifficulty = () => {
 
   easyButton.onclick = () => {
     startEasyGame()
+    clearTimeout(timer)
+    countdown()
   }
 
   normalButton.onclick = () => {
     startNormalGame()
+    clearTimeout(timer)
+    countdown()
   }
 
   difficultButton.onclick = () => {
     startDifficultGame()
+    clearTimeout(timer)
+    countdown()
   }
 }
 
@@ -324,108 +406,4 @@ const startGame = (width, height) => {
   createGridArray(width, height);
   createGridStructure();
 };
-
-/**
- * Checks for matches at initiation
- */
-
-const thereAreMatches = () => {
-  return thereAreVerticalMatches() || thereAreHorizontalMatches();
-};
-
-/**
- * Checks whether matches exist or not
- *
- */
-const thereAreVerticalMatches = () => {
-  let verticalMatch = [];
-
-  for (let i = 0; i < listOfItems.length; i++) {
-    for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[i + 1] &&
-        listOfItems[i + 2] &&
-        listOfItems[i][j] === listOfItems[i + 1][j] &&
-        listOfItems[i][j] === listOfItems[i + 2][j]
-      ) {
-        return true;
-      }
-    }
-  }
-  return false;
-};
-
-const thereAreHorizontalMatches = () => {
-  let horizontalMatch = [];
-
-  for (let i = 0; i < listOfItems.length; i++) {
-    for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[j + 1] &&
-        listOfItems[j + 2] &&
-        listOfItems[i][j] === listOfItems[i][j + 1] &&
-        listOfItems[i][j] === listOfItems[i][j + 2]
-      ) {
-        return true;
-      }
-    }
-  }
-  return false;
-};
-
-/**
-<<<<<<< HEAD
- * Finds the existing matches
- *
-=======
- * When matches exits, it finds them
- * 
->>>>>>> bugFixChooseDifficultyOnStart
- */
-const verticalMatches = () => {
-  let verticalMatch = [];
-
-  for (let i = 0; i < listOfItems.length; i++) {
-    for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[i + 1] &&
-        listOfItems[i + 2] &&
-        listOfItems[i][j] === listOfItems[i + 1][j] &&
-        listOfItems[i][j] === listOfItems[i + 2][j]
-      ) {
-        verticalMatch = verticalMatch.concat([
-          [i, j],
-          [i + 1, j],
-          [i + 2, j],
-        ]);
-      }
-    }
-  }
-  createNewEmojis(verticalMatch);
-};
-
-const horizontalMatches = () => {
-  let horizontalMatch = [];
-
-  for (let i = 0; i < listOfItems.length; i++) {
-    for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[j + 1] &&
-        listOfItems[j + 2] &&
-        listOfItems[i][j] === listOfItems[i][j + 1] &&
-        listOfItems[i][j] === listOfItems[i][j + 2]
-      ) {
-        horizontalMatch = horizontalMatch.concat([
-          [i, j],
-          [i, j + 1],
-          [i, j + 2],
-        ]);
-      }
-    }
-  }
-  createNewEmojis(horizontalMatch);
-};
-
-
-
 
