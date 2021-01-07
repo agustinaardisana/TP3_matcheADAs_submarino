@@ -1,6 +1,6 @@
 // -------------------------------------🐠 Variables JS
 let itemSize = 0;
-let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦦"];
+let seaCreaturesArray = ["🐠", "🐬", "🧜‍♀️", "🦑", "🐡", "🦭"];
 let listOfItems = [];
 let items = "";
 let gridWidth = "";
@@ -380,7 +380,6 @@ const difficultButton = document.querySelector('.game-difficult');
 const hideModal = modal => modal.classList.add('hidden');
 const showModal = modal => modal.classList.remove('hidden');
 
-startGame(6, 6);
 
 // // Start Game
 // playGameButton.onclick = () => {
