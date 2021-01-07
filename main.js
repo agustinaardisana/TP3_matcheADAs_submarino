@@ -318,10 +318,14 @@ const countdown = () => {
     timer = setTimeout(countdown, 1000); //--------COMENTADO TEMPORALMENTE PARA PODER TRABAJR TRANQUILAS----
   }
   else {
-    //endGame();
+    endGame();
   }
-
 };
+
+const endGame = () => {
+  //abrir modal que indica el puntaje
+  //puntajeFinalObtenido.textContent = `${puntos}`;
+}
 
 // -------------------------------------🐠 Clickable Effect
 /**
