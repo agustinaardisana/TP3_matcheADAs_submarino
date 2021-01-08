@@ -140,9 +140,9 @@ const storeClicksOnItems = (e) => {
       changePositions(firstClickedSquare, secondClickedSquare);
       if (thereAreMatches()) {
         verticalMatches();
-        createNewEmojis(verticalMatch);
+        // createNewEmojis(verticalMatch);
         horizontalMatches();
-        createNewEmojis(horizontalMatch);
+        createNewEmojis(totalMatchesIntersection());
         resetClicks(firstClickedSquare, secondClickedSquare);
       } else {
         setTimeout(
@@ -210,7 +210,7 @@ const changePositions = (firstSquare, secondSquare) => {
 };
 
 const thereAreMatches = () => {
-  return verticalMatches() || horizontalMatches();
+  return verticalMatches().length > 0 || horizontalMatches().length > 0;
 };
 
 /**
@@ -221,42 +221,43 @@ const verticalMatches = () => {
   verticalMatch = [];
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[i + 1] &&
-        listOfItems[i + 2] &&
-        listOfItems[i][j] === listOfItems[i + 1][j] &&
-        listOfItems[i][j] === listOfItems[i + 2][j]
-      ) {
-        verticalMatch = verticalMatch.concat([
-          [i, j],
-          [i + 1, j],
-          [i + 2, j],
-        ]);
-        return true;
+      if (listOfItems[i + 1] && listOfItems[i + 2]) {
+        if (
+          listOfItems[i][j] === listOfItems[i + 1][j] &&
+          listOfItems[i][j] === listOfItems[i + 2][j]
+        ) {
+          verticalMatch = verticalMatch.concat([
+            [i, j],
+            [i + 1, j],
+            [i + 2, j],
+          ]);
+        }
       }
     }
   }
+
+  return verticalMatch;
 };
 
 const horizontalMatches = () => {
   horizontalMatch = [];
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
-      if (
-        listOfItems[j + 1] &&
-        listOfItems[j + 2] &&
-        listOfItems[i][j] === listOfItems[i][j + 1] &&
-        listOfItems[i][j] === listOfItems[i][j + 2]
-      ) {
-        horizontalMatch = horizontalMatch.concat([
-          [i, j],
-          [i, j + 1],
-          [i, j + 2],
-        ]);
-        return true;
+      if (listOfItems[j + 1] && listOfItems[j + 2]) {
+        if (
+          listOfItems[i][j] === listOfItems[i][j + 1] &&
+          listOfItems[i][j] === listOfItems[i][j + 2]
+        ) {
+          horizontalMatch = horizontalMatch.concat([
+            [i, j],
+            [i, j + 1],
+            [i, j + 2],
+          ]);
+        }
       }
     }
   }
+  return horizontalMatch;
 };
 
 const resetClicks = (firstClickedSquare, secondClickedSquare) => {
@@ -264,6 +265,32 @@ const resetClicks = (firstClickedSquare, secondClickedSquare) => {
   secondClickedSquare.classList.remove("selected");
   firstClickedSquare = null;
   secondClickedSquare = null;
+};
+
+const totalMatchesIntersection = () => {
+  let matchesUnfiltered = verticalMatch.concat(horizontalMatch);
+
+  const filtrado = matchesUnfiltered.filter((hola, i, matchesUnfiltered) => {
+    let datax1 = matchesUnfiltered[i];
+    let datax2 = matchesUnfiltered[i + 1];
+    let datay1 = matchesUnfiltered[i];
+    let datay2 = matchesUnfiltered[i + 1];
+    return datax1 && datay1 !== datax2 && datay2;
+  });
+  // let joint = [];
+  // let combinedMatches = matchesUnfiltered.filter((coordinates) => {
+  //   let uniqueValue = `${coordinates[0]}${coordinates[1]}`;
+
+  //   if (!joint.includes(uniqueValue)) {
+  //     joint.push(uniqueValue);
+
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // });
+  return filtrado;
+  // return combinedMatches;
 };
 
 /**
@@ -296,9 +323,9 @@ const displayNewEmojisHTML = (match, x, y) => {
     match.innerHTML = `${listOfItems[x][y]}`;
     if (thereAreMatches()) {
       verticalMatches();
-      createNewEmojis(verticalMatches);
+      createNewEmojis(verticalMatch);
       horizontalMatches();
-      createNewEmojis(horizontalMatches);
+      createNewEmojis(horizontalMatch);
     }
   }, 200);
 };
@@ -319,7 +346,7 @@ const countdown = () => {
 const endGame = () => {
   //abrir modal que indica el puntaje
   //puntajeFinalObtenido.textContent = `${puntos}`;
-}
+};
 
 // -------------------------------------🐠 Clickable Effect
 /**
