@@ -8,9 +8,8 @@ const paddingAndBorder = 32;
 let difficulty = 0;
 let remainingTime = 30;
 let timer = null;
-let horizontalMatch = [];
 let verticalMatch = [];
-
+let horizontalMatch = [];
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
@@ -219,6 +218,7 @@ const thereAreMatches = () => {
  *
  */
 const verticalMatches = () => {
+  verticalMatch = [];
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
       if (
@@ -239,6 +239,7 @@ const verticalMatches = () => {
 };
 
 const horizontalMatches = () => {
+  horizontalMatch = [];
   for (let i = 0; i < listOfItems.length; i++) {
     for (let j = 0; j < listOfItems[i].length; j++) {
       if (
