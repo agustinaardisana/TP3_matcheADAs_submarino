@@ -316,6 +316,11 @@ const countdown = () => {
   }
 };
 
+const endGame = () => {
+  //abrir modal que indica el puntaje
+  //puntajeFinalObtenido.textContent = `${puntos}`;
+}
+
 // -------------------------------------🐠 Clickable Effect
 /**
  * Gives a clickable effect to the selected item
