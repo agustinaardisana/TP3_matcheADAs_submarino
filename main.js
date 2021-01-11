@@ -10,13 +10,11 @@ let remainingTime = 30;
 let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
-let score = 0
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
-const scoreCounter = document.querySelector('#score')
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
 const playGameButton = document.querySelector(".play-game");
@@ -142,7 +140,6 @@ const storeClicksOnItems = (e) => {
       changePositions(firstClickedSquare, secondClickedSquare);
       if (thereAreMatches()) {
         verticalMatches();
-        // createNewEmojis(verticalMatch);
         horizontalMatches();
         createNewEmojis(totalMatchesIntersection());
         resetClicks(firstClickedSquare, secondClickedSquare);
@@ -291,25 +288,8 @@ const totalMatchesIntersection = () => {
     }
   });
   // return filtrado;
-  updateScore(combinedMatches)
   return combinedMatches;
 };
-
-/**
- * Keeps the score
- */
-const updateScore = (combinedMatches) => {
-  score += Number(combinedMatches.length) * 100
-  scoreCounter.textContent = `${score}`;
-}
-
- /**
- * Resests the score count when game restarts
- */
-const resetScore = () => {
-	score = 0;
-	scoreCounter.textContent = `${score}`;
-}
 
 /**
  * Looks for new matches and replaces the emojis for new ones
@@ -448,4 +428,29 @@ const startGame = (width, height) => {
   defineItemSize(width);
   createGridArray(width, height);
   createGridStructure();
+};
+
+const removerImagenCelda = (listaCoordenaMatches) => {
+  // en cada posición del array tengo las coordenas del div
+  for (let i = 0; i < listaCoordenaMatches.length; i++) {
+    let posicionDivMatcheado = listaCoordenaMatches[i];
+    let divMatcheado = obtenerDivMatcheado(
+      posicionDivMatcheado[0],
+      posicionDivMatcheado[1]
+    );
+
+    removerImagenDelDiv(divMatcheado);
+
+    let xDivDeArriba = posicionDivMatcheado[0] - 1;
+
+    while (xDivDeArriba >= 0) {
+      let divDeArriba = obtenerDivMatcheado(
+        xDivDeArriba,
+        posicionDivMatcheado[1]
+      );
+
+      intercambiarCuadrados(divMatcheado, divDeArriba);
+      xDivDeArriba -= 1;
+    }
+  }
 };
