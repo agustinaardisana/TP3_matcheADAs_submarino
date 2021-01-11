@@ -270,27 +270,26 @@ const resetClicks = (firstClickedSquare, secondClickedSquare) => {
 const totalMatchesIntersection = () => {
   let matchesUnfiltered = verticalMatch.concat(horizontalMatch);
 
-  const filtrado = matchesUnfiltered.filter((hola, i, matchesUnfiltered) => {
-    let datax1 = matchesUnfiltered[i];
-    let datax2 = matchesUnfiltered[i + 1];
-    let datay1 = matchesUnfiltered[i];
-    let datay2 = matchesUnfiltered[i + 1];
-    return datax1 && datay1 !== datax2 && datay2;
-  });
-  // let joint = [];
-  // let combinedMatches = matchesUnfiltered.filter((coordinates) => {
-  //   let uniqueValue = `${coordinates[0]}${coordinates[1]}`;
+  // const filtrado = matchesUnfiltered.filter((hola, i, matchesUnfiltered) => {
+  //   let datax1 = matchesUnfiltered[i];
+  //   let datax2 = matchesUnfiltered[i + 1];
 
-  //   if (!joint.includes(uniqueValue)) {
-  //     joint.push(uniqueValue);
-
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
+  //   return datax1 && datay1 !== datax2 && datay2;
   // });
-  return filtrado;
-  // return combinedMatches;
+  let joint = [];
+  let combinedMatches = matchesUnfiltered.filter((coordinates) => {
+    let uniqueValue = `${coordinates[0]}${coordinates[1]}`;
+
+    if (!joint.includes(uniqueValue)) {
+      joint.push(uniqueValue);
+
+      return true;
+    } else {
+      return false;
+    }
+  });
+  // return filtrado;
+  return combinedMatches;
 };
 
 /**
