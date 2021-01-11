@@ -430,27 +430,30 @@ const startGame = (width, height) => {
   createGridStructure();
 };
 
-const removerImagenCelda = (listaCoordenaMatches) => {
+/**
+ * Makes emojis "fall down" after a match was deleted
+ */
+const removeEmoji = (matchesCoordinates) => {
   // en cada posición del array tengo las coordenas del div
-  for (let i = 0; i < listaCoordenaMatches.length; i++) {
-    let posicionDivMatcheado = listaCoordenaMatches[i];
-    let divMatcheado = obtenerDivMatcheado(
-      posicionDivMatcheado[0],
-      posicionDivMatcheado[1]
+  for (let i = 0; i < matchesCoordinates.length; i++) {
+    let matchedDivPosition = matchesCoordinates[i];
+    let matchedDiv = selectMatchHTML(
+      matchedDivPosition[0],
+      matchedDivPosition[1]
     );
 
-    removerImagenDelDiv(divMatcheado);
+    //removerImagenDelDiv(matchedDiv);
 
-    let xDivDeArriba = posicionDivMatcheado[0] - 1;
+    let upperEmojiDataX = matchedDivPosition[0] - 1;
 
-    while (xDivDeArriba >= 0) {
-      let divDeArriba = obtenerDivMatcheado(
-        xDivDeArriba,
-        posicionDivMatcheado[1]
+    while (upperEmojiDataX >= 0) {
+      let upperEmoji = selectMatchHTML(
+        upperEmojiDataX,
+        matchedDivPosition[1]
       );
 
-      intercambiarCuadrados(divMatcheado, divDeArriba);
-      xDivDeArriba -= 1;
+      changePositions(matchedDiv, upperEmoji);
+      upperEmojiDataX -= 1;
     }
   }
 };
