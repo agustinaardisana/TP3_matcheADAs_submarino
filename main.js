@@ -10,11 +10,13 @@ let remainingTime = 30;
 let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
+let score = 0
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
+const scoreCounter = document.querySelector('#score')
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
 const playGameButton = document.querySelector(".play-game");
@@ -289,8 +291,25 @@ const totalMatchesIntersection = () => {
     }
   });
   // return filtrado;
+  updateScore(combinedMatches)
   return combinedMatches;
 };
+
+/**
+ * Keeps the score
+ */
+const updateScore = (combinedMatches) => {
+  score += Number(combinedMatches.length) * 100
+  scoreCounter.textContent = `${score}`;
+}
+
+ /**
+ * Resests the score count when game restarts
+ */
+const resetScore = () => {
+	score = 0;
+	scoreCounter.textContent = `${score}`;
+}
 
 /**
  * Looks for new matches and replaces the emojis for new ones
