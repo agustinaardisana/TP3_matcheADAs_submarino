@@ -10,6 +10,8 @@ let remainingTime = 30;
 let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
+let combinedMatches = []
+
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
@@ -276,7 +278,7 @@ const totalMatchesIntersection = () => {
   //   return datax1 && datay1 !== datax2 && datay2;
   // });
   let joint = [];
-  let combinedMatches = matchesUnfiltered.filter((coordinates) => {
+  combinedMatches = matchesUnfiltered.filter((coordinates) => {
     let uniqueValue = `${coordinates[0]}${coordinates[1]}`;
 
     if (!joint.includes(uniqueValue)) {
@@ -298,9 +300,10 @@ const createNewEmojis = (arrayMatches) => {
   for (let i = 0; i < arrayMatches.length; i++) {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
-    displayNewEmojisJS(listOfItems, x, y);
     let match = selectMatchHTML(x, y);
     match.innerHTML = "";
+    dropEmojis(combinedMatches)
+    displayNewEmojisJS(listOfItems, x, y);
     displayNewEmojisHTML(match, x, y);
   }
 };
@@ -433,17 +436,13 @@ const startGame = (width, height) => {
 /**
  * Makes emojis "fall down" after a match was deleted
  */
-const removeEmoji = (matchesCoordinates) => {
-  // en cada posición del array tengo las coordenas del div
-  for (let i = 0; i < matchesCoordinates.length; i++) {
-    let matchedDivPosition = matchesCoordinates[i];
+const dropEmojis = (combinedMatches) => {
+  for (let i = 0; i < combinedMatches.length; i++) {
+    let matchedDivPosition = combinedMatches[i];
     let matchedDiv = selectMatchHTML(
       matchedDivPosition[0],
       matchedDivPosition[1]
     );
-
-    //removerImagenDelDiv(matchedDiv);
-
     let upperEmojiDataX = matchedDivPosition[0] - 1;
 
     while (upperEmojiDataX >= 0) {
