@@ -12,6 +12,7 @@ let verticalMatch = [];
 let horizontalMatch = [];
 let score = 0;
 // let combinedMatches = [];
+let animationDelay = 200;
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
@@ -210,7 +211,7 @@ const storeClicksOnItems = (e) => {
       } else {
         setTimeout(
           () => changePositions(firstClickedSquare, secondClickedSquare),
-          400
+          animationDelay * 2
         );
       }
     } else {
@@ -371,9 +372,11 @@ const resetScore = () => {
  */
 
 const deleteAndDropEmojis = (arrayMatches) => {
-  deleteEmoji(arrayMatches);
-  dropEmojis(arrayMatches);
-  searchVoid();
+  setTimeout(() => {
+    deleteEmoji(arrayMatches);
+    dropEmojis(arrayMatches);
+    searchVoid();
+  }, animationDelay * 4);
 };
 
 const deleteEmoji = (arrayMatches) => {
@@ -381,6 +384,8 @@ const deleteEmoji = (arrayMatches) => {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
     let match = selectArrayHTML(x, y);
+    console.log(match);
+    match.classList.add("deleted");
     match.innerHTML = "";
   }
 };
@@ -431,7 +436,8 @@ const displayNewEmojisJS = (array, voidX, voidY) => {
 const displayNewEmojisHTML = (voidEmojiList, x, y) => {
   setTimeout(() => {
     voidEmojiList.innerHTML = `${listOfItems[x][y]}`;
-  }, 200);
+    voidEmojiList.classList.add("new");
+  }, animationDelay);
 };
 
 // -------------------------------------🐠Countdown
@@ -464,6 +470,7 @@ const endGame = () => {
  */
 const clickable = () => {
   let emojisList = document.querySelectorAll(".emoji");
+  console.log(emojisList);
 
   for (let emoji of emojisList) {
     emoji.onclick = () => {
