@@ -11,6 +11,7 @@ let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
 // let combinedMatches = [];
+let animationDelay = 200
 
 // -------------------------------------🐠 Variables DOM
 const grid = document.querySelector("#grid");
@@ -148,7 +149,7 @@ const storeClicksOnItems = (e) => {
       } else {
         setTimeout(
           () => changePositions(firstClickedSquare, secondClickedSquare),
-          400
+          animationDelay * 2
         );
       }
     } else {
@@ -292,9 +293,11 @@ const totalMatchesIntersection = () => {
  */
 
 const deleteAndDropEmojis = (arrayMatches) => {
-  deleteEmoji(arrayMatches);
-  dropEmojis(arrayMatches);
-  searchVoid()
+  setTimeout(() => {
+    deleteEmoji(arrayMatches);
+    dropEmojis(arrayMatches);
+    searchVoid()
+  }, animationDelay * 4)
 };
 
 const deleteEmoji = (arrayMatches) => {
@@ -302,6 +305,8 @@ const deleteEmoji = (arrayMatches) => {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
     let match = selectArrayHTML(x, y);
+    console.log(match)
+    match.classList.add('deleted')
     match.innerHTML = "";
   }
 };
@@ -326,7 +331,7 @@ const dropEmojis = (arrayMatches) => {
 
 const searchVoid = () => {
   let emojisList = document.querySelectorAll(".emoji");
- 
+
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
       let voidX = emptySquare.dataset.x
@@ -346,13 +351,14 @@ const displayNewEmojisJS = (array, voidX, voidY) => {
   for (let i = 0; i < array.length; i++) {
     listOfItems[voidX][voidY] = getRandomItems(seaCreaturesArray);
   }
-  return listOfItems[voidX][voidY]  ;
+  return listOfItems[voidX][voidY];
 };
 
 const displayNewEmojisHTML = (voidEmojiList, x, y) => {
   setTimeout(() => {
     voidEmojiList.innerHTML = `${listOfItems[x][y]}`;
-  }, 200);
+    voidEmojiList.classList.add('new')
+  }, animationDelay);
 };
 
 // -------------------------------------🐠Countdown
@@ -379,6 +385,7 @@ const endGame = () => {
  */
 const clickable = () => {
   let emojisList = document.querySelectorAll(".emoji");
+  console.log(emojisList)
 
   for (let emoji of emojisList) {
     emoji.onclick = () => {

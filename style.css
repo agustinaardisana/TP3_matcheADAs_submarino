@@ -185,9 +185,27 @@ h1 {
   justify-content: space-around;
 }
 
-/* HIDE MODAL */
+/* Special classes */
 .hidden {
   display: none;
+}
+
+.emoji {
+  transform: scale(1);
+  transition: 100ms;
+}
+
+.selected{
+  transform: scale(1.1);
+}
+
+.eliminated {
+  transform: scale(0);
+}
+
+.new {
+  transform: scale(1);
+  transition: 50ms;
 }
 
 /* ------------------------------------ Responsive */
