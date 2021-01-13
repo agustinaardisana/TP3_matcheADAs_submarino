@@ -143,7 +143,7 @@ const storeClicksOnItems = (e) => {
       if (thereAreMatches()) {
         verticalMatches();
         horizontalMatches();
-        createNewEmojis(totalMatchesIntersection());
+        deleteAndDropEmojis(totalMatchesIntersection());
         resetClicks(firstClickedSquare, secondClickedSquare);
       } else {
         setTimeout(
@@ -291,33 +291,32 @@ const totalMatchesIntersection = () => {
  * Looks for new matches and replaces the emojis for new ones
  */
 
+const deleteAndDropEmojis = (arrayMatches) => {
+  deleteEmoji(arrayMatches);
+  dropEmojis(arrayMatches);
+  searchVoid()
+};
+
 const deleteEmoji = (arrayMatches) => {
   for (let i = 0; i < arrayMatches.length; i++) {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
-    let match = selectMatchHTML(x, y);
+    let match = selectArrayHTML(x, y);
     match.innerHTML = "";
   }
 };
 
-const createNewEmojis = (arrayMatches) => {
-  deleteEmoji(arrayMatches);
-  dropEmojis(arrayMatches);
-  searchVoid()
-  displayNewEmojisJS(listOfItems, x, y);
-  displayNewEmojisHTML(match, x, y);
-};
 const dropEmojis = (arrayMatches) => {
   for (let i = 0; i < arrayMatches.length; i++) {
     let matchedDivPosition = arrayMatches[i];
-    let matchedDiv = selectMatchHTML(
+    let matchedDiv = selectArrayHTML(
       matchedDivPosition[0],
       matchedDivPosition[1]
     );
     let upperEmojiDataX = matchedDivPosition[0] - 1;
 
     while (upperEmojiDataX >= 0) {
-      let upperEmoji = selectMatchHTML(upperEmojiDataX, matchedDivPosition[1]);
+      let upperEmoji = selectArrayHTML(upperEmojiDataX, matchedDivPosition[1]);
 
       changePositions(matchedDiv, upperEmoji);
       upperEmojiDataX -= 1;
@@ -327,41 +326,33 @@ const dropEmojis = (arrayMatches) => {
 
 const searchVoid = () => {
   let emojisList = document.querySelectorAll(".emoji");
-  // console.log(emojisList);
+ 
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
-      console.log(emptySquare.dataset.x, emptySquare.dataset.y);
-      // return (emptySquare.dataset.x, emptySquare.dataset.y)
+      let voidX = emptySquare.dataset.x
+      let voidY = emptySquare.dataset.y
+      let voidEmojiList = selectArrayHTML(voidX, voidY)
+      displayNewEmojisJS(listOfItems, voidX, voidY);
+      displayNewEmojisHTML(voidEmojiList, voidX, voidY);
     }
   }
 };
-const borrarImgDeListaDeGatitos = (combinedMatches) => {
-  for (let i = 0; i < combinedMatches.length; i++) {
-    listOfItems[combinedMatches[i][0][combinedMatches[i][1]]] = null;
-  }
-};
 
-const displayNewEmojisJS = (array, x, y) => {
-  for (let i = 0; i < array.length; i++) {
-    listOfItems[x][y] = getRandomItems(seaCreaturesArray);
-  }
-  return listOfItems[x][y];
-};
-
-const selectMatchHTML = (x, y) => {
+const selectArrayHTML = (x, y) => {
   return document.querySelector(`div[data-x='${[x]}'][data-y='${[y]}']`);
 };
 
-const displayNewEmojisHTML = (match, x, y) => {
+const displayNewEmojisJS = (array, voidX, voidY) => {
+  for (let i = 0; i < array.length; i++) {
+    listOfItems[voidX][voidY] = getRandomItems(seaCreaturesArray);
+  }
+  return listOfItems[voidX][voidY]  ;
+};
+
+const displayNewEmojisHTML = (voidEmojiList, x, y) => {
   setTimeout(() => {
-    match.innerHTML = `${listOfItems[x][y]}`;
-  //   if (thereAreMatches()) {
-  //     verticalMatches();
-  //     createNewEmojis(verticalMatch);
-  //     horizontalMatches();
-  //     createNewEmojis(horizontalMatch);
-  //   }
-  // }, 200);
+    voidEmojiList.innerHTML = `${listOfItems[x][y]}`;
+  }, 200);
 };
 
 // -------------------------------------🐠Countdown
@@ -373,7 +364,7 @@ const countdown = () => {
     remainingTime--;
     timer = setTimeout(countdown, 1000); //--------COMENTADO TEMPORALMENTE PARA PODER TRABAJR TRANQUILAS----
   } else {
-    //endGame();
+    endGame();
   }
 };
 
@@ -466,16 +457,3 @@ const startGame = (width, height) => {
   createGridStructure();
 };
 
-/**
- * Makes emojis "fall down" after a match was deleted
- */
-// const dropEmojis = (match) => {
-//   let upperEmojiDataX = Number(match.dataset.x) - 1;
-
-//   while (upperEmojiDataX >= 0) {
-//     let upperEmoji = selectMatchHTML(upperEmojiDataX, match.dataset.y);
-
-//     changePositions(matchedDiv, upperEmoji);
-//     upperEmojiDataX -= 1;
-//   }
-// };
