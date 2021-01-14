@@ -136,7 +136,8 @@ h1 {
 }
 
 .popup-welcome,
-.popup-difficulty {
+.popup-difficulty,
+.popup-game-over {
   width: 480px;
   background-color: #fff;
   padding: 30px 20px;

@@ -17,6 +17,7 @@ const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
+const finalScore = document.querySelector("#final-score")
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
 const playGameButton = document.querySelector(".play-game");
@@ -24,10 +25,21 @@ const gameDifficultyModal = document.querySelector(".game-difficulty");
 const easyButton = document.querySelector(".game-easy");
 const normalButton = document.querySelector(".game-normal");
 const difficultButton = document.querySelector(".game-difficult");
+const gameOverModal = document.querySelector(".game-over");
+const newGameButton = document.querySelector(".new-game")
+
 
 //-------------------------------------🐠 General Actions
 const hideModal = (modal) => modal.classList.add("hidden");
 const showModal = (modal) => modal.classList.remove("hidden");
+
+// -------------------------------------🐠
+
+//-------------------------------------🐠 Modals Actions
+newGameButton.onclick = () => {
+  gameOverModal.classList.add('hidden')
+  gameDifficultyModal.classList.remove('hidden')
+}
 
 // -------------------------------------🐠
 
@@ -369,8 +381,8 @@ const countdown = () => {
 };
 
 const endGame = () => {
-  //abrir modal que indica el puntaje
-  //puntajeFinalObtenido.textContent = `${puntos}`;
+  gameOverModal.classList.remove('hidden')
+  //finalScore.textContent = `${}`;
 };
 
 // -------------------------------------🐠 Clickable Effect
