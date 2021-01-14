@@ -144,8 +144,6 @@ const createSquare = (x, y, items) => {
   square.style.left = `${y * itemSize}px`;
   square.innerHTML = items;
   square.classList.add("square");
-  square.classList.add("transition-effect");
-  square.classList.add("emoji");
 
   return square;
 };
@@ -372,8 +370,10 @@ const resetScore = () => {
  */
 
 const deleteAndDropEmojis = (arrayMatches) => {
+  deleteEmoji(arrayMatches);
   setTimeout(() => {
-    deleteEmoji(arrayMatches);
+    //   dropEmojis(arrayMatches);
+    // }, animationDelay * 2);
     dropEmojis(arrayMatches);
     searchVoid();
   }, animationDelay * 4);
@@ -385,8 +385,9 @@ const deleteEmoji = (arrayMatches) => {
     let y = arrayMatches[i][1];
     let match = selectArrayHTML(x, y);
     console.log(match);
-    match.classList.add("deleted");
+    match.classList.add("eliminated");
     match.innerHTML = "";
+    match.classList.remove("eliminated");
   }
 };
 
@@ -409,7 +410,7 @@ const dropEmojis = (arrayMatches) => {
 };
 
 const searchVoid = () => {
-  let emojisList = document.querySelectorAll(".emoji");
+  let emojisList = document.querySelectorAll(".square");
 
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
@@ -437,7 +438,8 @@ const displayNewEmojisHTML = (voidEmojiList, x, y) => {
   setTimeout(() => {
     voidEmojiList.innerHTML = `${listOfItems[x][y]}`;
     voidEmojiList.classList.add("new");
-  }, animationDelay);
+  }, animationDelay * 3);
+  voidEmojiList.classList.remove("new");
 };
 
 // -------------------------------------🐠Countdown
@@ -469,7 +471,7 @@ const endGame = () => {
  * Gives a clickable effect to the selected item
  */
 const clickable = () => {
-  let emojisList = document.querySelectorAll(".emoji");
+  let emojisList = document.querySelectorAll(".square");
   console.log(emojisList);
 
   for (let emoji of emojisList) {
@@ -518,6 +520,7 @@ const startEasyGame = () => {
     startGame(9, 9);
     difficulty = 9;
     hideModal(gameDifficultyModal);
+    clickable();
   } while (thereAreMatches());
 };
 
@@ -527,6 +530,7 @@ const startNormalGame = () => {
     startGame(8, 8);
     difficulty = 8;
     hideModal(gameDifficultyModal);
+    clickable();
   } while (thereAreMatches());
 };
 
@@ -536,6 +540,7 @@ const startDifficultGame = () => {
     startGame(7, 7);
     difficulty = 7;
     hideModal(gameDifficultyModal);
+    clickable();
   } while (thereAreMatches());
 };
 
