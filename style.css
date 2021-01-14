@@ -101,28 +101,6 @@ h1 {
   justify-content: center;
 }
 
-.transition-effect {
-  transition: background-color 0.4s, top 0.4s, left 0.4s, bottom 0.4s,
-    right 0.4s, transform 0.2s;
-}
-
-/* ------------------------------------ Efecto Clickeable */
-
-.emoji {
-  animation-iteration-count: 1;
-}
-
-.clickable {
-  animation-name: clickable;
-  animation-duration: 1s;
-}
-
-@keyframes clickable {
-  20% {
-    transform: scale(0.7);
-  }
-}
-
 .overlay {
   width: 100%;
   height: 100%;
@@ -190,17 +168,28 @@ h1 {
   display: none;
 }
 
-.emoji {
-  transform: scale(1);
-  transition: 100ms;
+/* ------------------------------------ Efects */
+
+.square {
+  animation-iteration-count: 1;
+  transition: background-color 0.4s, top 0.4s, left 0.4s, bottom 0.4s,
+    right 0.4s, transform 0.2s;
 }
 
-.selected{
-  transform: scale(1.1);
+.clickable {
+  animation-name: clickable;
+  animation-duration: 1s;
+}
+
+@keyframes clickable {
+  20% {
+    transform: scale(0.7);
+  }
 }
 
 .eliminated {
   transform: scale(0);
+  transition: 1000ms;
 }
 
 .new {
