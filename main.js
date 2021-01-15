@@ -26,8 +26,11 @@ const easyButton = document.querySelector(".game-easy");
 const normalButton = document.querySelector(".game-normal");
 const difficultButton = document.querySelector(".game-difficult");
 const gameOverModal = document.querySelector(".game-over");
-const newGameButton = document.querySelector(".new-game")
-
+const newGameButtons = document.querySelectorAll(".new-game")
+const restartGameIcon = document.querySelector('.restart-game.icon')
+const gameRestartModal = document.querySelector('.game-restart')
+const cancelButton = document.querySelector('.cancel')
+const restartGameButton = document.querySelector('.restart-game.button')
 
 //-------------------------------------🐠 General Actions
 const hideModal = (modal) => modal.classList.add("hidden");
@@ -36,10 +39,26 @@ const showModal = (modal) => modal.classList.remove("hidden");
 // -------------------------------------🐠
 
 //-------------------------------------🐠 Modals Actions
-newGameButton.onclick = () => {
-  gameOverModal.classList.add('hidden')
-  gameDifficultyModal.classList.remove('hidden')
-  remainingTime = 30;
+newGameButtons.forEach((button) => {
+  button.onclick = () => {
+    button.closest('.overlay').classList.add('hidden')
+    gameDifficultyModal.classList.remove('hidden')
+    remainingTime = 30;
+  }
+})
+
+restartGameIcon.onclick = () => {
+  gameRestartModal.classList.remove('hidden')
+  //---------VER COMO PARAR EL TIMER CUANDO ESTE ESTA ABIERTO--------
+}
+
+cancelButton.onclick = () => {
+  gameRestartModal.classList.add('hidden')
+}
+
+restartGameButton.onclick = () => {
+   gameOverModal.classList.add('hidden')
+   //-------FALTA TERMINAR--------
 }
 
 // -------------------------------------🐠

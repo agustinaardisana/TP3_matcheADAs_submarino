@@ -137,7 +137,8 @@ h1 {
 
 .popup-welcome,
 .popup-difficulty,
-.popup-game-over {
+.popup-game-over,
+.popup-restart {
   width: 480px;
   background-color: #fff;
   padding: 30px 20px;

@@ -22,7 +22,7 @@
                 <button>
                     <i class="fas fa-info-circle"></i>
                 </button>
-                <button>
+                <button class="restart-game icon">
                     <i class="fas fa-redo"></i>
                 </button>
             </div>
@@ -76,10 +76,22 @@
             <p>Puntaje Obtenido: <span id="final-score"></span></p>
             <div class="modal-buttons">
                 <button class="modals-buttons new-game">Nuevo Juego</button>
-                <button class="modals-buttons restart-game">Reiniciar</button>
+                <button class="modals-buttons restart-game button">Reiniciar</button>
             </div>
         </section>
     </div>
+
+    <div class="overlay game-restart hidden">
+        <section class="popup-restart" aria-modal="true" aria-label="Reiniciar Juego?" role="dialog">
+            <h2>Reiniciar Juego?</h2>
+            <p>Perderás todo tu puntaje acumulado!</p>
+            <div class="modal-buttons">
+                <button class="modals-buttons cancel">Cancelar</button>
+                <button class="modals-buttons new-game">Nuevo Juego</button>
+            </div>
+        </section>
+    </div>
+
 
     <script src="main.js"></script>
 </body>
