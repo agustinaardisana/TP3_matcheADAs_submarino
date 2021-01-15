@@ -39,6 +39,7 @@ const showModal = (modal) => modal.classList.remove("hidden");
 newGameButton.onclick = () => {
   gameOverModal.classList.add('hidden')
   gameDifficultyModal.classList.remove('hidden')
+  remainingTime = 30;
 }
 
 // -------------------------------------🐠
