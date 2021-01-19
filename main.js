@@ -449,7 +449,7 @@ const countdown = () => {
 
 const endGame = () => {
   gameOverModal.classList.remove('hidden')
-  //finalScore.textContent = `${}`;
+  finalScore.textContent = `${score}`;
 };
 
 // -------------------------------------🐠 Clickable Effect

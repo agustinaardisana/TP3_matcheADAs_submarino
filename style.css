@@ -187,6 +187,10 @@ h1 {
   justify-content: space-around;
 }
 
+section > p {
+  margin: 20px;
+}
+
 /* HIDE MODAL */
 .hidden {
   display: none;
