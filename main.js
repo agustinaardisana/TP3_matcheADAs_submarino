@@ -20,6 +20,7 @@ const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
 const scoreCounter = document.querySelector('#score')
 
+const finalScore = document.querySelector("#final-score")
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
 const playGameButton = document.querySelector(".play-game");
@@ -27,10 +28,68 @@ const gameDifficultyModal = document.querySelector(".game-difficulty");
 const easyButton = document.querySelector(".game-easy");
 const normalButton = document.querySelector(".game-normal");
 const difficultButton = document.querySelector(".game-difficult");
+const gameOverModal = document.querySelector(".game-over");
+const newGameButtons = document.querySelectorAll(".new-game")
+const restartGameIcon = document.querySelector('.restart-game.icon')
+const gameRestartModal = document.querySelector('.game-restart')
+const cancelButton = document.querySelector('.cancel')
+const restartGameButton = document.querySelector('.restart-game.button')
 
 //-------------------------------------🐠 General Actions
 const hideModal = (modal) => modal.classList.add("hidden");
 const showModal = (modal) => modal.classList.remove("hidden");
+
+// -------------------------------------🐠
+
+//-------------------------------------🐠 Modals Actions
+newGameButtons.forEach((button) => {
+  button.onclick = () => {
+    button.closest('.overlay').classList.add('hidden')
+    gameDifficultyModal.classList.remove('hidden')
+    clearTimeout(timer);
+    remainingTime = 30;
+  }
+})
+
+restartGameIcon.onclick = () => {
+  gameRestartModal.classList.remove('hidden')
+  clearTimeout(timer);
+}
+
+cancelButton.onclick = () => {
+  gameRestartModal.classList.add('hidden')
+  countdown()
+}
+
+restartGameButton.onclick = () => {
+  gameOverModal.classList.add('hidden')
+  retrieveDifficultySetting()
+  clearTimeout(timer);
+  remainingTime = 30;
+  countdown()
+    //-------Revisar puntaje--------
+}
+
+//REtrieves the difficulty that the user chose when the game started
+retrieveDifficultySetting = () => {
+  if (difficulty === '9') {
+    startEasyGame()
+  } else if (difficulty === '8') {
+    startNormalGame()
+  } else if (difficulty === '7') {
+    startDifficultGame()
+  }
+}
+
+const revisarDificultadElegida = () => {
+  if (nivelDificultad === 'facil') {
+    grillaFacil();
+  } else if (nivelDificultad === 'normal') {
+    grillaNormal();
+  } else if (nivelDificultad === 'dificil') {
+    grillaDificil();
+  }
+};
 
 // -------------------------------------🐠
 
@@ -346,7 +405,7 @@ const dropEmojis = (arrayMatches) => {
 
 const searchVoid = () => {
   let emojisList = document.querySelectorAll(".emoji");
- 
+
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
       let voidX = emptySquare.dataset.x
@@ -366,7 +425,7 @@ const displayNewEmojisJS = (array, voidX, voidY) => {
   for (let i = 0; i < array.length; i++) {
     listOfItems[voidX][voidY] = getRandomItems(seaCreaturesArray);
   }
-  return listOfItems[voidX][voidY]  ;
+  return listOfItems[voidX][voidY];
 };
 
 const displayNewEmojisHTML = (voidEmojiList, x, y) => {
@@ -389,8 +448,8 @@ const countdown = () => {
 };
 
 const endGame = () => {
-  //abrir modal que indica el puntaje
-  //puntajeFinalObtenido.textContent = `${puntos}`;
+  gameOverModal.classList.remove('hidden')
+  //finalScore.textContent = `${}`;
 };
 
 // -------------------------------------🐠 Clickable Effect
