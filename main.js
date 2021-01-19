@@ -43,23 +43,50 @@ newGameButtons.forEach((button) => {
   button.onclick = () => {
     button.closest('.overlay').classList.add('hidden')
     gameDifficultyModal.classList.remove('hidden')
+    clearTimeout(timer);
     remainingTime = 30;
   }
 })
 
 restartGameIcon.onclick = () => {
   gameRestartModal.classList.remove('hidden')
-  //---------VER COMO PARAR EL TIMER CUANDO ESTE ESTA ABIERTO--------
+  clearTimeout(timer);
 }
 
 cancelButton.onclick = () => {
   gameRestartModal.classList.add('hidden')
+  countdown()
 }
 
 restartGameButton.onclick = () => {
-   gameOverModal.classList.add('hidden')
-   //-------FALTA TERMINAR--------
+  gameOverModal.classList.add('hidden')
+  retrieveDifficultySetting()
+  clearTimeout(timer);
+  remainingTime = 30;
+  countdown()
+    //-------Revisar puntaje--------
 }
+
+//REtrieves the difficulty that the user chose when the game started
+retrieveDifficultySetting = () => {
+  if (difficulty === '9') {
+    startEasyGame()
+  } else if (difficulty === '8') {
+    startNormalGame()
+  } else if (difficulty === '7') {
+    startDifficultGame()
+  }
+}
+
+const revisarDificultadElegida = () => {
+  if (nivelDificultad === 'facil') {
+    grillaFacil();
+  } else if (nivelDificultad === 'normal') {
+    grillaNormal();
+  } else if (nivelDificultad === 'dificil') {
+    grillaDificil();
+  }
+};
 
 // -------------------------------------🐠
 
@@ -358,7 +385,7 @@ const dropEmojis = (arrayMatches) => {
 
 const searchVoid = () => {
   let emojisList = document.querySelectorAll(".emoji");
- 
+
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
       let voidX = emptySquare.dataset.x
@@ -378,7 +405,7 @@ const displayNewEmojisJS = (array, voidX, voidY) => {
   for (let i = 0; i < array.length; i++) {
     listOfItems[voidX][voidY] = getRandomItems(seaCreaturesArray);
   }
-  return listOfItems[voidX][voidY]  ;
+  return listOfItems[voidX][voidY];
 };
 
 const displayNewEmojisHTML = (voidEmojiList, x, y) => {
