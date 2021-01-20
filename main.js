@@ -11,7 +11,7 @@ let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
 let score = 0;
-// let combinedMatches = [];
+let combo = 1;
 let animationDelay = 200;
 
 // -------------------------------------🐠 Variables DOM
@@ -19,8 +19,8 @@ const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
+const comboCounter = document.querySelector("#combo");
 const scoreCounter = document.querySelector("#score");
-
 const finalScore = document.querySelector("#final-score");
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
@@ -345,25 +345,32 @@ const totalMatchesIntersection = () => {
       return false;
     }
   });
-  // return filtrado;
+  updateCombos();
   updateScore(combinedMatches);
   return combinedMatches;
 };
 
 /**
- * Keeps the score
+ * Keeps the score and combos
  */
 const updateScore = (combinedMatches) => {
-  score += Number(combinedMatches.length) * 100;
+  score += Number(combinedMatches.length) * 100 * combo;
   scoreCounter.textContent = `${score}`;
 };
 
-/**
- * Resests the score count when game restarts
- */
+const updateCombos = () => {
+  combo++;
+  comboCounter.textContent = `${combo}`;
+};
+
 const resetScore = () => {
   score = 0;
   scoreCounter.textContent = `${score}`;
+};
+
+const resetCombos = () => {
+  combo = 1;
+  comboCounter.textContent = `${combo}`;
 };
 
 /**
