@@ -10,7 +10,7 @@ let remainingTime = 30;
 let timer = null;
 let verticalMatch = [];
 let horizontalMatch = [];
-let score = 0
+let score = 0;
 // let combinedMatches = [];
 
 // -------------------------------------🐠 Variables DOM
@@ -18,9 +18,9 @@ const grid = document.querySelector("#grid");
 const gridContainer = document.querySelector("#grid-container");
 const controlsContainer = document.querySelector(".container.controls");
 const timerCountdown = document.querySelector(".timer-countdown");
-const scoreCounter = document.querySelector('#score')
+const scoreCounter = document.querySelector("#score");
 
-const finalScore = document.querySelector("#final-score")
+const finalScore = document.querySelector("#final-score");
 // -------------------------------------🐠 Modals
 const startGameModal = document.querySelector(".start-game");
 const playGameButton = document.querySelector(".play-game");
@@ -29,11 +29,11 @@ const easyButton = document.querySelector(".game-easy");
 const normalButton = document.querySelector(".game-normal");
 const difficultButton = document.querySelector(".game-difficult");
 const gameOverModal = document.querySelector(".game-over");
-const newGameButtons = document.querySelectorAll(".new-game")
-const restartGameIcon = document.querySelector('.restart-game.icon')
-const gameRestartModal = document.querySelector('.game-restart')
-const cancelButton = document.querySelector('.cancel')
-const restartGameButton = document.querySelector('.restart-game.button')
+const newGameButtons = document.querySelectorAll(".new-game");
+const restartGameIcon = document.querySelector(".restart-game.icon");
+const gameRestartModal = document.querySelector(".game-restart");
+const cancelButton = document.querySelector(".cancel");
+const restartGameButton = document.querySelector(".restart-game.button");
 
 //-------------------------------------🐠 General Actions
 const hideModal = (modal) => modal.classList.add("hidden");
@@ -44,49 +44,49 @@ const showModal = (modal) => modal.classList.remove("hidden");
 //-------------------------------------🐠 Modals Actions
 newGameButtons.forEach((button) => {
   button.onclick = () => {
-    button.closest('.overlay').classList.add('hidden')
-    gameDifficultyModal.classList.remove('hidden')
+    button.closest(".overlay").classList.add("hidden");
+    gameDifficultyModal.classList.remove("hidden");
     clearTimeout(timer);
     remainingTime = 30;
-  }
-})
+  };
+});
 
 restartGameIcon.onclick = () => {
-  gameRestartModal.classList.remove('hidden')
+  gameRestartModal.classList.remove("hidden");
   clearTimeout(timer);
-}
+};
 
 cancelButton.onclick = () => {
-  gameRestartModal.classList.add('hidden')
-  countdown()
-}
+  gameRestartModal.classList.add("hidden");
+  countdown();
+};
 
 restartGameButton.onclick = () => {
-  gameOverModal.classList.add('hidden')
-  retrieveDifficultySetting()
+  gameOverModal.classList.add("hidden");
+  retrieveDifficultySetting();
   clearTimeout(timer);
   remainingTime = 30;
-  countdown()
-    //-------Revisar puntaje--------
-}
+  countdown();
+  //-------Revisar puntaje--------
+};
 
 //REtrieves the difficulty that the user chose when the game started
 retrieveDifficultySetting = () => {
-  if (difficulty === '9') {
-    startEasyGame()
-  } else if (difficulty === '8') {
-    startNormalGame()
-  } else if (difficulty === '7') {
-    startDifficultGame()
+  if (difficulty === "9") {
+    startEasyGame();
+  } else if (difficulty === "8") {
+    startNormalGame();
+  } else if (difficulty === "7") {
+    startDifficultGame();
   }
-}
+};
 
 const revisarDificultadElegida = () => {
-  if (nivelDificultad === 'facil') {
+  if (nivelDificultad === "facil") {
     grillaFacil();
-  } else if (nivelDificultad === 'normal') {
+  } else if (nivelDificultad === "normal") {
     grillaNormal();
-  } else if (nivelDificultad === 'dificil') {
+  } else if (nivelDificultad === "dificil") {
     grillaDificil();
   }
 };
@@ -346,7 +346,7 @@ const totalMatchesIntersection = () => {
     }
   });
   // return filtrado;
-  updateScore(combinedMatches)
+  updateScore(combinedMatches);
   return combinedMatches;
 };
 
@@ -354,17 +354,17 @@ const totalMatchesIntersection = () => {
  * Keeps the score
  */
 const updateScore = (combinedMatches) => {
-  score += Number(combinedMatches.length) * 100
+  score += Number(combinedMatches.length) * 100;
   scoreCounter.textContent = `${score}`;
-}
+};
 
- /**
+/**
  * Resests the score count when game restarts
  */
 const resetScore = () => {
-	score = 0;
-	scoreCounter.textContent = `${score}`;
-}
+  score = 0;
+  scoreCounter.textContent = `${score}`;
+};
 
 /**
  * Looks for new matches and replaces the emojis for new ones
@@ -373,7 +373,7 @@ const resetScore = () => {
 const deleteAndDropEmojis = (arrayMatches) => {
   deleteEmoji(arrayMatches);
   dropEmojis(arrayMatches);
-  searchVoid()
+  searchVoid();
 };
 
 const deleteEmoji = (arrayMatches) => {
@@ -408,9 +408,9 @@ const searchVoid = () => {
 
   for (let emptySquare of emojisList) {
     if (emptySquare.textContent === "") {
-      let voidX = emptySquare.dataset.x
-      let voidY = emptySquare.dataset.y
-      let voidEmojiList = selectArrayHTML(voidX, voidY)
+      let voidX = emptySquare.dataset.x;
+      let voidY = emptySquare.dataset.y;
+      let voidEmojiList = selectArrayHTML(voidX, voidY);
       displayNewEmojisJS(listOfItems, voidX, voidY);
       displayNewEmojisHTML(voidEmojiList, voidX, voidY);
     }
@@ -437,18 +437,24 @@ const displayNewEmojisHTML = (voidEmojiList, x, y) => {
 // -------------------------------------🐠Countdown
 
 const countdown = () => {
-  timerCountdown.textContent = `0:${remainingTime}`;
+  timerCountdown.innerHTML = countdownInMinutes(remainingTime);
 
   if (remainingTime > 0) {
     remainingTime--;
-    timer = setTimeout(countdown, 1000); //--------COMENTADO TEMPORALMENTE PARA PODER TRABAJR TRANQUILAS----
+    timer = setTimeout(countdown, 1000);
   } else {
     endGame();
   }
 };
 
+const countdownInMinutes = (seconds) => {
+  return (
+    Math.floor(seconds / 60) + ":" + ("0" + Math.floor(seconds % 60)).slice(-2)
+  );
+};
+
 const endGame = () => {
-  gameOverModal.classList.remove('hidden')
+  gameOverModal.classList.remove("hidden");
   finalScore.textContent = `${score}`;
 };
 
@@ -535,4 +541,3 @@ const startGame = (width, height) => {
   createGridArray(width, height);
   createGridStructure();
 };
-
