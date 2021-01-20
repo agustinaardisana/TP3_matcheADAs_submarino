@@ -49,6 +49,7 @@ newGameButtons.forEach((button) => {
     gameDifficultyModal.classList.remove("hidden");
     clearTimeout(timer);
     remainingTime = 30;
+    resetScore();
   };
 });
 
@@ -68,7 +69,7 @@ restartGameButton.onclick = () => {
   clearTimeout(timer);
   remainingTime = 30;
   countdown();
-  //-------Revisar puntaje--------
+  resetScore();
 };
 
 //REtrieves the difficulty that the user chose when the game started
@@ -384,7 +385,6 @@ const deleteEmoji = (arrayMatches) => {
     let x = arrayMatches[i][0];
     let y = arrayMatches[i][1];
     let match = selectArrayHTML(x, y);
-    console.log(match);
     match.classList.add("eliminated");
     match.innerHTML = "";
     match.classList.remove("eliminated");
@@ -472,7 +472,6 @@ const endGame = () => {
  */
 const clickable = () => {
   let emojisList = document.querySelectorAll(".square");
-  console.log(emojisList);
 
   for (let emoji of emojisList) {
     emoji.onclick = () => {
