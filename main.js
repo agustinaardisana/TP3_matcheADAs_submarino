@@ -35,7 +35,7 @@ const restartGameIcon = document.querySelector(".restart-game.icon");
 const gameRestartModal = document.querySelector(".game-restart");
 const cancelButton = document.querySelector(".cancel");
 const restartGameButton = document.querySelector(".restart-game.button");
-
+const infoButton = document.querySelector(".game-info");
 //-------------------------------------🐠 General Actions
 const hideModal = (modal) => modal.classList.add("hidden");
 const showModal = (modal) => modal.classList.remove("hidden");
@@ -52,6 +52,11 @@ newGameButtons.forEach((button) => {
     resetScore();
   };
 });
+
+infoButton.onclick = () => {
+  startGameModal.classList.remove("hidden");
+  countdown();
+};
 
 restartGameIcon.onclick = () => {
   gameRestartModal.classList.remove("hidden");
