@@ -361,6 +361,7 @@ const updateScore = (combinedMatches) => {
 const updateCombos = () => {
   combo++;
   comboCounter.textContent = `${combo}`;
+  setTimeout(() => resetCombos(), 700);
 };
 
 const resetScore = () => {
@@ -380,11 +381,14 @@ const resetCombos = () => {
 const deleteAndDropEmojis = (arrayMatches) => {
   deleteEmoji(arrayMatches);
   setTimeout(() => {
-    //   dropEmojis(arrayMatches);
-    // }, animationDelay * 2);
     dropEmojis(arrayMatches);
     searchVoid();
   }, animationDelay * 4);
+
+  if (thereAreMatches()) {
+    updateCombos();
+    setTimeout(() => deleteAndDropEmojis(totalMatchesIntersection()), 700);
+  }
 };
 
 const deleteEmoji = (arrayMatches) => {
