@@ -73,12 +73,12 @@ restartGameButton.onclick = () => {
 };
 
 //REtrieves the difficulty that the user chose when the game started
-retrieveDifficultySetting = () => {
-  if (difficulty === "9") {
+const retrieveDifficultySetting = () => {
+  if (difficulty === 9) {
     startEasyGame();
-  } else if (difficulty === "8") {
+  } else if (difficulty === 8) {
     startNormalGame();
-  } else if (difficulty === "7") {
+  } else if (difficulty === 7) {
     startDifficultGame();
   }
 };
