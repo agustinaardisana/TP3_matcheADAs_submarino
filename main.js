@@ -46,7 +46,7 @@ const showModal = (modal) => modal.classList.remove("hidden");
 newGameButtons.forEach((button) => {
   button.onclick = () => {
     button.closest(".overlay").classList.add("hidden");
-    gameDifficultyModal.classList.remove("hidden");
+    showModal(gameDifficultyModal);
     clearTimeout(timer);
     remainingTime = 30;
     resetScore();
@@ -58,26 +58,26 @@ infoButton.onclick = () => {
 };
 
 const displayInfo = () => {
-  startGameModal.classList.remove("hidden");
+  showModal(startGameModal);
   clearTimeout(timer);
   playGameButton.onclick = () => {
-    startGameModal.classList.add("hidden");
+    hideModal(startGameModal);
     countdown();
   };
 };
 
 restartGameIcon.onclick = () => {
-  gameRestartModal.classList.remove("hidden");
+  showModal(gameRestartModal);
   clearTimeout(timer);
 };
 
 cancelButton.onclick = () => {
-  gameRestartModal.classList.add("hidden");
+  hideModal(gameRestartModal);
   countdown();
 };
 
 restartGameButton.onclick = () => {
-  gameOverModal.classList.add("hidden");
+  hideModal(gameOverModal);
   retrieveDifficultySetting();
   clearTimeout(timer);
   remainingTime = 30;
@@ -486,7 +486,7 @@ const countdownInMinutes = (seconds) => {
 };
 
 const endGame = () => {
-  gameOverModal.classList.remove("hidden");
+  showModal(gameOverModal);
   finalScore.textContent = `${score}`;
 };
 
