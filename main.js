@@ -54,8 +54,16 @@ newGameButtons.forEach((button) => {
 });
 
 infoButton.onclick = () => {
+  displayInfo();
+};
+
+const displayInfo = () => {
   startGameModal.classList.remove("hidden");
-  countdown();
+  clearTimeout(timer);
+  playGameButton.onclick = () => {
+    startGameModal.classList.add("hidden");
+    countdown();
+  };
 };
 
 restartGameIcon.onclick = () => {
